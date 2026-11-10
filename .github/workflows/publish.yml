@@ -8,11 +8,11 @@ on:
       target:
         description: 'Publish target'
         required: true
-        default: 'npm'
+        default: 'github-packages'
         type: choice
         options:
-          - npm
           - github-packages
+          - npm
 
 jobs:
   publish-npm:
@@ -76,4 +76,5 @@ jobs:
           cd packages/kitgrid
           npm publish --registry https://npm.pkg.github.com
         env:
+          OWNER: ${{ github.repository_owner }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
