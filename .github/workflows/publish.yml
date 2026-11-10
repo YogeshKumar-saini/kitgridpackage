@@ -8,11 +8,11 @@ on:
       target:
         description: 'Publish target'
         required: true
-        default: 'npm'
+        default: 'github-packages'
         type: choice
         options:
-          - npm
           - github-packages
+          - npm
 
 jobs:
   publish-npm:
@@ -74,6 +74,10 @@ jobs:
       - name: Publish to GitHub Packages
         run: |
           cd packages/kitgrid
+          npm version --no-git-tag-version --allow-same-version 0.1.0
+          npm pkg set name="@${OWNER,,}/kitgrid"
+          npm pkg set publishConfig.registry="https://npm.pkg.github.com"
           npm publish
         env:
+          OWNER: ${{ github.repository_owner }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
