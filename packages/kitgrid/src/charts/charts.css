@@ -1,0 +1,162 @@
+@layer kg.components {
+  /* Palette tints lean toward the light end in both themes, so they never sink into a dark canvas. */
+  :root,
+  [data-theme="light"],
+  .light {
+    --_kg-chart-tint: var(--kg-bg);
+    --_kg-chart-quiet: 28%;
+  }
+
+  [data-theme="dark"],
+  .dark {
+    --_kg-chart-tint: var(--kg-fg);
+    --_kg-chart-quiet: 44%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-theme="system"] {
+      --_kg-chart-tint: var(--kg-fg);
+      --_kg-chart-quiet: 44%;
+    }
+  }
+
+  .kg-chart {
+    position: relative;
+    min-width: 0;
+  }
+
+  .kg-chart__plot[data-state="loading"] {
+    background:
+      linear-gradient(
+          100deg,
+          transparent 30%,
+          color-mix(in oklab, var(--kg-fg) 5%, transparent) 50%,
+          transparent 70%
+        )
+        0 0 / 250% 100%,
+      var(--kg-surface-sunken);
+    border-radius: var(--kg-radius-lg);
+    animation: kg-chart-shimmer 1.6s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-chart__plot[data-state="loading"] {
+      animation-duration: 4s;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-chart__plot[data-state="loading"] {
+    animation-duration: 4s;
+  }
+
+  @keyframes kg-chart-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+    to {
+      background-position: -150% 0;
+    }
+  }
+
+  .kg-chart__plot,
+  .kg-chart__empty {
+    width: 100%;
+    height: var(--_height, 280px);
+  }
+
+  .kg-chart__empty {
+    display: grid;
+    place-items: center;
+    padding: calc(var(--kg-space) * 4);
+    font-size: var(--kg-text-sm);
+    color: var(--kg-fg-muted);
+    text-align: center;
+    border: 1px dashed var(--kg-border);
+    border-radius: var(--kg-radius-lg);
+  }
+
+  /* ECharts writes inline styles on the tooltip shell, hence !important on what it sets. */
+  .kg-chart-tooltip {
+    min-width: 8.5rem;
+    max-width: 18rem;
+    padding: calc(var(--kg-space) * 2.5) calc(var(--kg-space) * 3) !important;
+    font-size: var(--kg-text-sm) !important;
+    line-height: 1.45 !important;
+    font-variant-numeric: tabular-nums;
+    color: var(--kg-fg) !important;
+    background: var(--kg-surface-raised) !important;
+    border: 1px solid var(--kg-border) !important;
+    border-radius: var(--kg-radius-lg) !important;
+    box-shadow:
+      var(--kg-shadow-inset-edge),
+      0 0 0 0.5px oklch(var(--kg-shadow-tint) / 0.04),
+      var(--kg-shadow-lg) !important;
+    /* Fades only: ECharts would otherwise glide the box across the plot from its last spot. */
+    transition: opacity var(--kg-duration-fast) var(--kg-ease-out) !important;
+
+    &:empty {
+      display: none !important;
+    }
+  }
+
+  .kg-chart-tooltip__title {
+    margin-block-end: calc(var(--kg-space) * 1.5);
+    padding-block-end: calc(var(--kg-space) * 1.5);
+    font-weight: 600;
+    color: var(--kg-fg);
+    border-block-end: 1px solid var(--kg-border);
+  }
+
+  .kg-chart-tooltip__row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: calc(var(--kg-space) * 2);
+
+    & + & {
+      margin-block-start: calc(var(--kg-space) * 1);
+    }
+  }
+
+  .kg-chart-tooltip__swatch {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--kg-radius-full);
+  }
+
+  .kg-chart-tooltip__name {
+    grid-column: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--kg-fg-muted);
+  }
+
+  .kg-chart-tooltip__value {
+    grid-column: 3;
+    font-family: var(--kg-font-mono);
+    font-size: var(--kg-text-xs);
+    font-weight: 600;
+    color: var(--kg-fg);
+  }
+
+  .kg-spark-grid {
+    --_tile: 180px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(var(--_tile), 100%), 1fr));
+    gap: calc(var(--kg-space) * 3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .kg-spark-grid__tile {
+    min-width: 0;
+    padding: calc(var(--kg-space) * 4);
+    background: var(--kg-surface);
+    border: 1px solid var(--kg-border);
+    border-radius: var(--kg-radius-lg);
+    box-shadow: var(--kg-shadow-inset-edge), var(--kg-shadow-xs);
+  }
+}

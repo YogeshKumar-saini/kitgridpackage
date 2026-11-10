@@ -1,0 +1,56 @@
+/* The beam gradients and the sweep keyframes, which read the transform from a private property. */
+@layer kg.components {
+  /*
+   * Each beam is a soft ellipse whose axis is pinned to the origin corner, with its first third
+   * tucked off-canvas so the light appears to enter from outside the frame.
+   */
+  .kg-hero-spotlight__beam,
+  .kg-hero-spotlight__core {
+    --_angle: var(--kg-hero-spotlight-angle, 28deg);
+    --_delay: var(--kg-hero-spotlight-delay, 0.25s);
+    --_rest: rotate(var(--_angle)) translate(-30%, -50%) scale(1);
+
+    transform: var(--_rest);
+    animation: kg-hero-spotlight-in var(--kg-hero-spotlight-duration, 2s) var(--kg-ease-out)
+      var(--_delay) both;
+  }
+
+  .kg-hero-spotlight__beam {
+    background: radial-gradient(
+      ellipse 64% 50% at 36% 50%,
+      var(--_color),
+      color-mix(in oklab, var(--_color) 42%, transparent) 38%,
+      color-mix(in oklab, var(--_color) 12%, transparent) 70%,
+      transparent
+    );
+  }
+
+  .kg-hero-spotlight__core {
+    --_rest: rotate(calc(var(--_angle) + 3deg)) translate(-30%, -50%) scale(1);
+
+    background: radial-gradient(
+      ellipse 60% 50% at 38% 50%,
+      var(--_fill),
+      color-mix(in oklab, var(--_fill) 30%, transparent) 55%,
+      transparent
+    );
+    animation-delay: calc(var(--_delay) + 0.15s);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-hero-spotlight__layer > * {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-hero-spotlight__layer > * {
+    animation: none;
+  }
+
+  @keyframes kg-hero-spotlight-in {
+    from {
+      opacity: 0;
+      transform: rotate(calc(var(--_angle) - 22deg)) translate(-62%, -50%) scale(0.55);
+    }
+  }
+}

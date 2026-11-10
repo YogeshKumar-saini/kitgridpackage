@@ -1,0 +1,14 @@
+/* Entry and exit read --_hide, which each side sets on the panel. */
+@layer kg.components {
+  @keyframes kg-drawer-in {
+    from {
+      transform: var(--_hide);
+    }
+  }
+
+  @keyframes kg-drawer-out {
+    to {
+      transform: var(--_hide);
+    }
+  }
+}

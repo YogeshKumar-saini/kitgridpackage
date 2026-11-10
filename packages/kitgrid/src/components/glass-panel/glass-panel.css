@@ -1,0 +1,15 @@
+@layer kg.components {
+  /* The top edge catches the light; the rest of the hairline stays quiet. */
+  .kg-glass-panel::before {
+    content: "";
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--kg-surface) 80%, transparent),
+      transparent 40%
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+}

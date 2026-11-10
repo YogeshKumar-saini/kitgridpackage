@@ -1,0 +1,10 @@
+@layer kg.components {
+  @keyframes kg-confirm-button-nudge {
+    30% {
+      translate: -2px 0;
+    }
+    60% {
+      translate: 2px 0;
+    }
+  }
+}

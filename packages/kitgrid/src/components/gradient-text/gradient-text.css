@@ -1,0 +1,8 @@
+/* Keyframes can't be utilities. */
+@layer kg.components {
+  @keyframes kg-gradient-text {
+    to {
+      background-position: 100% 50%;
+    }
+  }
+}

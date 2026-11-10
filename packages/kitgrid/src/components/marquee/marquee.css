@@ -1,0 +1,55 @@
+/* Edge fades are gradient masks, which do not fit in utilities. */
+@layer kg.components {
+  .kg-marquee[data-fade] {
+    --_fade: var(--kg-marquee-fade, 12%);
+
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--_fade),
+      #000 calc(100% - var(--_fade)),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--_fade),
+      #000 calc(100% - var(--_fade)),
+      transparent
+    );
+
+    &[data-orientation="vertical"] {
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        #000 var(--_fade),
+        #000 calc(100% - var(--_fade)),
+        transparent
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        #000 var(--_fade),
+        #000 calc(100% - var(--_fade)),
+        transparent
+      );
+    }
+
+    &[data-reduced] {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-marquee[data-fade] {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-marquee[data-fade] {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

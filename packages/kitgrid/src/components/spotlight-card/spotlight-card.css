@@ -1,0 +1,51 @@
+/* The pointer light: a radial gradient and an XOR mask ring, which utilities cannot express. */
+@layer kg.components {
+  .kg-spotlight-card {
+    --_glow: var(--kg-spotlight-color, var(--kg-paper-sage));
+    --_radius: var(--kg-spotlight-radius, 360px);
+    --_at: var(--kg-pointer-x, 50%) var(--kg-pointer-y, 0%);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity var(--kg-duration-slow) var(--kg-ease-out);
+    }
+
+    &::before {
+      z-index: -1;
+      background: radial-gradient(
+        var(--_radius) circle at var(--_at),
+        color-mix(in oklab, var(--_glow) 75%, transparent),
+        transparent 70%
+      );
+    }
+
+    /* Two masks XOR'd leave only the inner ring, so the light runs along the ink edge. */
+    &[data-border]::after {
+      padding: 2px;
+      background: radial-gradient(
+        calc(var(--_radius) * 0.7) circle at var(--_at),
+        var(--_glow),
+        transparent 70%
+      );
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#000 0 0) content-box exclude,
+        linear-gradient(#000 0 0);
+    }
+
+    &[data-pointer="in"]::before,
+    &[data-pointer="in"]::after,
+    &:focus-within::after {
+      opacity: 1;
+    }
+  }
+}

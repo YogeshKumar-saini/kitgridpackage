@@ -1,0 +1,18 @@
+{
+  "name": "@kitgrid/registry",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Builds the kitgrid Resource Registry: shadcn-compatible items, registry.json and llms.txt.",
+  "license": "MIT",
+  "type": "module",
+  "exports": "./src/index.js",
+  "bin": {
+    "kitgrid-registry": "./bin/build.js"
+  },
+  "scripts": {
+    "build": "node bin/build.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

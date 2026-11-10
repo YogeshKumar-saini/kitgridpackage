@@ -1,0 +1,73 @@
+@layer kg.components {
+  .kg-orbit-rings__core {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--_c) 22%, transparent),
+      transparent
+    );
+  }
+
+  .kg-orbit-rings__sweep {
+    animation: kg-orbit-rings-spin calc(var(--_dur) / var(--_speed)) linear infinite;
+    animation-play-state: var(--kg-orbit-rings-state, running);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg 250deg,
+        color-mix(in oklab, var(--_c) 70%, transparent) 345deg,
+        var(--_c) 359deg,
+        transparent 360deg
+      );
+      mask-image: radial-gradient(
+        closest-side,
+        transparent calc(100% - 2px),
+        #000 calc(100% - 1.5px),
+        #000 100%,
+        transparent 100%
+      );
+    }
+  }
+
+  .kg-orbit-rings[data-bodies] .kg-orbit-rings__sweep::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 7px;
+    aspect-ratio: 1;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: var(--_c);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--_c) 22%, transparent);
+  }
+
+  .kg-orbit-rings__ring:nth-child(odd) .kg-orbit-rings__sweep {
+    animation-direction: reverse;
+  }
+
+  /* Reverse sweeps keep the light trailing behind the body. */
+  .kg-orbit-rings__ring:nth-child(odd) .kg-orbit-rings__sweep::before {
+    scale: -1 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-orbit-rings__sweep {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-orbit-rings__sweep {
+    animation: none;
+  }
+
+  @keyframes kg-orbit-rings-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}

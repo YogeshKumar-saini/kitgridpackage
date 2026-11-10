@@ -1,0 +1,11 @@
+@layer kg.components {
+  @keyframes kg-webhook-open {
+    from {
+      opacity: 0;
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+}

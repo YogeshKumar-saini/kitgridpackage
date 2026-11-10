@@ -1,0 +1,9 @@
+/* Keyframes can't be utilities; the flash reads --_flash from the element. */
+@layer kg.components {
+  @keyframes kg-counter-flash {
+    from {
+      background-color: color-mix(in oklab, var(--_flash) 24%, transparent);
+      box-shadow: 0 0 0 0.15em color-mix(in oklab, var(--_flash) 24%, transparent);
+    }
+  }
+}

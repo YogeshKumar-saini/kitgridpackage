@@ -1,0 +1,36 @@
+/*
+ * The backdrop is pre-sized for the widest the row can get and clipped back to the resting size;
+ * JS opens the clip by --_grow. Clip-paths on pseudo-elements do not fit in utilities.
+ */
+@layer kg.components {
+  .kg-dock__backdrop {
+    &::before,
+    &::after {
+      --_clip: max(0px, calc(var(--_reserve, 0px) - var(--_grow, 0px)));
+
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+
+    &::before {
+      background: var(--kg-ink);
+      clip-path: inset(0 var(--_clip) round var(--_radius));
+    }
+
+    &::after {
+      background: var(--kg-surface);
+      clip-path: inset(2px calc(var(--_clip) + 2px) round calc(var(--_radius) - 2px));
+    }
+
+    [data-orientation="vertical"] > & {
+      &::before {
+        clip-path: inset(var(--_clip) 0 round var(--_radius));
+      }
+
+      &::after {
+        clip-path: inset(calc(var(--_clip) + 2px) 2px round calc(var(--_radius) - 2px));
+      }
+    }
+  }
+}

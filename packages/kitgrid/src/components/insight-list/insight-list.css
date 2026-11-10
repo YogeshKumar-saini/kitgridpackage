@@ -1,0 +1,9 @@
+/* Keyframes can't be utilities. */
+@layer kg.components {
+  @keyframes kg-insight-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+}

@@ -1,0 +1,43 @@
+@layer kg.components {
+  /* The sweep is a gradient stack moved by background-position, which utilities can't express. */
+  .kg-glare-hover {
+    --_glare: var(--kg-glare-color, color-mix(in oklab, var(--kg-paper-butter) 70%, transparent));
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      border-radius: inherit;
+      background: linear-gradient(
+          var(--_angle),
+          transparent calc(50% - var(--_size) / 2),
+          var(--_glare) 50%,
+          transparent calc(50% + var(--_size) / 2)
+        )
+        no-repeat;
+      background-size: 300% 300%;
+      background-position: 100% 100%;
+    }
+
+    &[data-reverse]::after {
+      transition: background-position var(--_duration) var(--kg-ease-out);
+    }
+
+    &:is(:hover, :focus-within)::after {
+      background-position: 0% 0%;
+      transition: background-position var(--_duration) var(--kg-ease-out);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-glare-hover::after {
+      display: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-glare-hover::after {
+    display: none;
+  }
+}

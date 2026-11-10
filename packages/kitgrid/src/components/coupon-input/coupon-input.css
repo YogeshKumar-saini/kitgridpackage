@@ -1,0 +1,24 @@
+/* Two identical shakes, so a repeated failure restarts the animation by switching names. */
+@layer kg.components {
+  @keyframes kg-coupon-shake-a {
+    15%,
+    55% {
+      translate: -5px 0;
+    }
+    35%,
+    75% {
+      translate: 4px 0;
+    }
+  }
+
+  @keyframes kg-coupon-shake-b {
+    15%,
+    55% {
+      translate: -5px 0;
+    }
+    35%,
+    75% {
+      translate: 4px 0;
+    }
+  }
+}

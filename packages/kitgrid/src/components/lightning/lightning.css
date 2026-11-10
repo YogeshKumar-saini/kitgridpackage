@@ -1,0 +1,47 @@
+@layer kg.components {
+  .kg-lightning__strike {
+    opacity: 0;
+    animation: kg-lightning-strike var(--kg-lightning-interval, 6s) linear infinite;
+    animation-delay: var(--_delay, 0s);
+  }
+
+  .kg-lightning__flash {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--_c) 30%, transparent),
+      transparent
+    );
+  }
+
+  /* A still frame keeps the bolts visible but quiet instead of an empty sky. */
+  @media (prefers-reduced-motion: reduce) {
+    .kg-lightning__strike {
+      animation: none;
+      opacity: 0.35;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-lightning__strike {
+    animation: none;
+    opacity: 0.35;
+  }
+
+  @keyframes kg-lightning-strike {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    1% {
+      opacity: 1;
+    }
+    2.5% {
+      opacity: 0.2;
+    }
+    4% {
+      opacity: 0.95;
+    }
+    9% {
+      opacity: 0;
+    }
+  }
+}

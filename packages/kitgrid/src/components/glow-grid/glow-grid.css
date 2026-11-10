@@ -1,0 +1,41 @@
+@layer kg.components {
+  .kg-glow-grid {
+    &[data-mask="radial"] > .kg-glow-grid__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-glow-grid__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-glow-grid__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-glow-grid__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-glow-grid__lines {
+    --_line: color-mix(in oklab, var(--kg-border) 75%, transparent);
+    background-image:
+      linear-gradient(to right, var(--_line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--_line) 1px, transparent 1px);
+    background-size: var(--_s) var(--_s);
+    background-position: -1px -1px;
+
+    &[data-lit] {
+      --_line: color-mix(in oklab, var(--_c) 80%, transparent);
+      mask-image: radial-gradient(
+        var(--kg-glow-grid-radius, 260px) circle at var(--_x) var(--_y),
+        #000 0%,
+        rgb(0 0 0 / 0.35) 45%,
+        transparent 100%
+      );
+    }
+  }
+}

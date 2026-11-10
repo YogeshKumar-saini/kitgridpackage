@@ -1,0 +1,82 @@
+/* Edge masks, the horizon tint and the flash and scroll loops do not fit in utilities. */
+@layer kg.components {
+  .kg-grid-pattern {
+    &[data-mask="radial"] > .kg-grid-pattern__layer {
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-grid-pattern__layer {
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 25%, transparent 100%);
+    }
+
+    &[data-mask="bottom"] > .kg-grid-pattern__layer {
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 100%, #000 25%, transparent 100%);
+    }
+
+    &[data-mask="edges"] > .kg-grid-pattern__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+
+    /* A soft paper tint sits on the horizon line, where the floor meets the sky. */
+    &[data-variant="floor"] > .kg-grid-pattern__layer::before {
+      content: "";
+      position: absolute;
+      top: 46%;
+      left: 10%;
+      right: 10%;
+      height: 36%;
+      translate: 0 -50%;
+      background: radial-gradient(ellipse 50% 50% at 50% 50%, var(--kg-paper-sky), transparent);
+    }
+
+    &[data-variant="floor"][data-animated] .kg-grid-pattern__svg {
+      animation: kg-grid-pattern-scroll calc(var(--kg-grid-duration, 4s) * 0.25) linear infinite;
+    }
+  }
+
+  /* The floor's SVG is one cell taller than the plane, so scrolling by one cell has no seam. */
+  .kg-grid-pattern__plane {
+    mask-image: linear-gradient(to bottom, transparent, #000 18%);
+  }
+
+  /* Resting opacity is the reduced-motion frame; the animation's first keyframe hides cells. */
+  .kg-grid-pattern__cell {
+    animation-name: kg-grid-pattern-flash;
+    animation-duration: var(--kg-grid-duration, 4s);
+    animation-timing-function: var(--kg-ease-in-out);
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-grid-pattern .kg-grid-pattern__cell,
+    .kg-grid-pattern .kg-grid-pattern__svg {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-grid-pattern .kg-grid-pattern__cell,
+  [data-kg-motion="reduce"] .kg-grid-pattern .kg-grid-pattern__svg,
+  .kg-grid-pattern[data-kg-motion="reduce"] :is(.kg-grid-pattern__cell, .kg-grid-pattern__svg) {
+    animation: none;
+  }
+
+  @keyframes kg-grid-pattern-flash {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    45% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes kg-grid-pattern-scroll {
+    to {
+      transform: translate3d(0, var(--kg-grid-size, 40px), 0);
+    }
+  }
+}

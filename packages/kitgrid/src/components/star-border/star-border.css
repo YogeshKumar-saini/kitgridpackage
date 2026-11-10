@@ -1,0 +1,23 @@
+@layer kg.components {
+  @keyframes kg-star-bottom {
+    from {
+      transform: translate(0%, 0%);
+      opacity: 1;
+    }
+    to {
+      transform: translate(-100%, 0%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes kg-star-top {
+    from {
+      transform: translate(0%, 0%);
+      opacity: 1;
+    }
+    to {
+      transform: translate(100%, 0%);
+      opacity: 0;
+    }
+  }
+}

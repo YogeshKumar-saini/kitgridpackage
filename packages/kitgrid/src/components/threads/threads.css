@@ -1,0 +1,64 @@
+@layer kg.components {
+  .kg-threads {
+    &[data-mask="radial"] > .kg-threads__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-threads__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-threads__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-threads__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-threads__strip {
+    animation: kg-threads-drift calc(36s / var(--_speed)) linear infinite;
+    animation-play-state: var(--kg-threads-state, running);
+  }
+
+  .kg-threads__line {
+    stroke: color-mix(in oklab, var(--_c) var(--_alpha, 50%), transparent);
+    animation: kg-threads-sway calc(7s / var(--_speed)) var(--kg-ease-in-out) infinite
+      alternate;
+    animation-delay: calc(var(--_i) * -0.37s);
+    animation-play-state: var(--kg-threads-state, running);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-threads__strip,
+    .kg-threads__line {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] :is(.kg-threads__strip, .kg-threads__line) {
+    animation: none;
+  }
+
+  @keyframes kg-threads-drift {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  @keyframes kg-threads-sway {
+    from {
+      transform: translateY(-1.5%);
+    }
+    to {
+      transform: translateY(1.5%);
+    }
+  }
+}

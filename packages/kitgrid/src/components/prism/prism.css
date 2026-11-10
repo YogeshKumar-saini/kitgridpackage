@@ -1,0 +1,92 @@
+@layer kg.components {
+  .kg-prism__beam {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--kg-ink) 55%, transparent)
+    );
+  }
+
+  /* Each band is a soft-edged ray pivoting on the exit face, so the fan needs no hard clip. */
+  .kg-prism__band {
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in oklab, var(--_band) 75%, transparent) 50%,
+      transparent
+    );
+    mask-image: linear-gradient(90deg, #000 0%, rgb(0 0 0 / 0.6) 30%, transparent 70%);
+    animation: kg-prism-shimmer calc(9s / var(--_speed)) var(--kg-ease-in-out) infinite
+      alternate;
+    animation-delay: var(--_delay);
+    animation-play-state: var(--kg-prism-state, running);
+  }
+
+  .kg-prism__glass {
+    background: linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--kg-surface) 55%, transparent),
+      color-mix(in oklab, var(--kg-surface-sunken) 35%, transparent)
+    );
+
+    /* A hairline edge drawn as a slightly smaller triangle cut out of an ink one. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: color-mix(in oklab, var(--kg-ink) 90%, transparent);
+      clip-path: polygon(
+        evenodd,
+        50% 0,
+        100% 100%,
+        0 100%,
+        50% 0,
+        50% 3%,
+        2.5% 98.6%,
+        97.5% 98.6%,
+        50% 3%
+      );
+    }
+  }
+
+  .kg-prism__caustic {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      color-mix(in oklab, var(--_c2) 45%, transparent) 60deg,
+      transparent 130deg,
+      color-mix(in oklab, var(--_c1) 40%, transparent) 220deg,
+      transparent 300deg
+    );
+    animation: kg-prism-turn calc(18s / var(--_speed)) linear infinite;
+    animation-play-state: var(--kg-prism-state, running);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-prism__band,
+    .kg-prism__caustic {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] :is(.kg-prism__band, .kg-prism__caustic) {
+    animation: none;
+  }
+
+  @keyframes kg-prism-shimmer {
+    from {
+      opacity: 0.55;
+      transform: scaleY(0.85);
+    }
+    to {
+      opacity: 1;
+      transform: scaleY(1.15);
+    }
+  }
+
+  @keyframes kg-prism-turn {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}

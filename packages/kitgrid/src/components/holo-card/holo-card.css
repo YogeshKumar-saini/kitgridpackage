@@ -1,0 +1,142 @@
+/* The foil itself: ink sets, glitter tiles and the gradient and mask stacks utilities can't express. */
+@layer kg.components {
+  .kg-holo-card {
+    --_f1: oklch(0.83 0.15 18);
+    --_f2: oklch(0.88 0.14 92);
+    --_f3: oklch(0.86 0.15 158);
+    --_f4: oklch(0.82 0.12 228);
+    --_f5: oklch(0.8 0.14 305);
+    --_light: color-mix(in oklab, white 94%, var(--kg-paper-butter));
+    --_glitter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='1' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 10 0 0 0 -6.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    --_glitter-fine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='97' height='97'%3E%3Cfilter id='g' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='1' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 12 0 0 0 -8.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    --_x: calc(var(--_px, 34) * 1%);
+    --_y: calc(var(--_py, 26) * 1%);
+
+    &[data-foil="gold"] {
+      --_f1: oklch(0.88 0.1 92);
+      --_f2: oklch(0.72 0.12 68);
+      --_f3: oklch(0.95 0.06 100);
+      --_f4: oklch(0.68 0.1 58);
+      --_f5: oklch(0.86 0.12 80);
+      --_light: oklch(0.98 0.03 90);
+    }
+
+    &[data-foil="silver"] {
+      --_f1: oklch(0.93 0.012 250);
+      --_f2: oklch(0.76 0.016 262);
+      --_f3: oklch(0.97 0.02 210);
+      --_f4: oklch(0.7 0.02 275);
+      --_f5: oklch(0.9 0.03 30);
+    }
+
+    &[data-foil="accent"] {
+      --_f1: var(--kg-paper-sage);
+      --_f2: var(--kg-paper-butter);
+      --_f3: var(--kg-paper-sky);
+      --_f4: var(--kg-paper-rose);
+      --_f5: var(--kg-paper-peach);
+    }
+  }
+
+  /* A crisp ink sheet that slides away from the light, so the card reads as lifting off the page. */
+  .kg-holo-card__body {
+    box-shadow: calc(6px + var(--_tx, 0) * -5px) calc(6px + var(--_ty, 0) * 5px) 0 var(--kg-ink);
+  }
+
+  /* Rainbow bands under a fine diagonal sheen. Moving the light slides the bands, so the hue
+     under any one spot shifts with the viewing angle exactly as printed foil does. */
+  .kg-holo-card__foil {
+    background-image:
+      repeating-linear-gradient(
+        118deg,
+        var(--_f1) 0%,
+        var(--_f2) 6%,
+        var(--_f3) 12%,
+        var(--_f4) 18%,
+        var(--_f5) 24%,
+        var(--_f1) 30%
+      ),
+      repeating-linear-gradient(
+        62deg,
+        oklch(0.2 0.01 260 / 0.55) 0%,
+        oklch(0.95 0.01 260 / 0.35) 2.5%,
+        oklch(0.2 0.01 260 / 0.55) 5%
+      );
+    background-size:
+      340% 340%,
+      220% 220%;
+    background-position:
+      calc(var(--_px, 34) * 1% + var(--_tx, 0) * 22%) calc(var(--_py, 26) * 1%),
+      calc(100% - var(--_px, 34) * 1%) calc(100% - var(--_py, 26) * 1%);
+    background-blend-mode: soft-light;
+    mix-blend-mode: color-dodge;
+    filter: saturate(1.15) contrast(1.1);
+    opacity: calc(var(--_intensity, 0.7) * (0.34 + var(--_lift, 0) * 0.5));
+    /* Strongest where the reflection falls, never fully gone elsewhere. */
+    -webkit-mask-image: radial-gradient(
+      farthest-corner circle at var(--_x) var(--_y),
+      #000 8%,
+      rgb(0 0 0 / 0.45) 55%,
+      rgb(0 0 0 / 0.25) 100%
+    );
+    mask-image: radial-gradient(
+      farthest-corner circle at var(--_x) var(--_y),
+      #000 8%,
+      rgb(0 0 0 / 0.45) 55%,
+      rgb(0 0 0 / 0.25) 100%
+    );
+  }
+
+  /* Glitter: foil-coloured specks that only light up in a pool around the reflection. Its two
+     grains drift at different rates with the tilt, so specks wink in and out as the card turns. */
+  .kg-holo-card__sparkle {
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--_f3) 0%,
+      var(--_f5) 10%,
+      var(--_f2) 20%,
+      var(--_f4) 30%,
+      var(--_f3) 40%
+    );
+    background-size: 260% 260%;
+    background-position: calc(100% - var(--_px, 34) * 1%) calc(var(--_py, 26) * 1%);
+    mix-blend-mode: color-dodge;
+    opacity: calc(var(--_intensity, 0.7) * (0.35 + var(--_lift, 0) * 0.65));
+    -webkit-mask-image:
+      radial-gradient(circle at var(--_x) var(--_y), #000, transparent 46%),
+      var(--_glitter), var(--_glitter-fine);
+    -webkit-mask-size:
+      100% 100%,
+      160px 160px,
+      97px 97px;
+    -webkit-mask-position:
+      0 0,
+      calc(var(--_tx, 0) * 9px) calc(var(--_ty, 0) * 9px),
+      calc(var(--_tx, 0) * -14px) calc(var(--_ty, 0) * -14px);
+    -webkit-mask-composite: source-in, source-over;
+    /* Composited bottom-up: the two grains are merged, then cut to the pool of light. */
+    mask-image:
+      radial-gradient(circle at var(--_x) var(--_y), #000, transparent 46%),
+      var(--_glitter), var(--_glitter-fine);
+    mask-size:
+      100% 100%,
+      160px 160px,
+      97px 97px;
+    mask-position:
+      0 0,
+      calc(var(--_tx, 0) * 9px) calc(var(--_ty, 0) * 9px),
+      calc(var(--_tx, 0) * -14px) calc(var(--_ty, 0) * -14px);
+    mask-composite: intersect, add;
+  }
+
+  .kg-holo-card__glare {
+    background: radial-gradient(
+      farthest-corner circle at var(--_x) var(--_y),
+      color-mix(in oklab, var(--_light) 85%, transparent) 0%,
+      color-mix(in oklab, var(--_light) 30%, transparent) 22%,
+      transparent 62%
+    );
+    mix-blend-mode: overlay;
+    opacity: calc(0.25 + var(--_lift, 0) * 0.6);
+  }
+}

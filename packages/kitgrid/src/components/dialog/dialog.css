@@ -1,0 +1,17 @@
+/* Shared entry and exit: Dialog, AlertDialog, CommandPalette and QuickView animate with these. */
+@layer kg.components {
+  @keyframes kg-dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+      box-shadow: 0 0 0 var(--kg-ink);
+    }
+  }
+
+  @keyframes kg-dialog-out {
+    to {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@layer kg.components {
+  .kg-bokeh {
+    &[data-mask="radial"] > .kg-bokeh__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-bokeh__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-bokeh__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-bokeh__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-bokeh__disc {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--_c) 70%, transparent) 0%,
+      color-mix(in oklab, var(--_c) 55%, transparent) 62%,
+      color-mix(in oklab, var(--_c) 85%, transparent) 78%,
+      transparent 100%
+    );
+    animation: kg-bokeh-float calc(var(--_dur) / var(--kg-bokeh-speed, 1))
+      var(--kg-ease-in-out) var(--_delay) infinite alternate;
+    animation-play-state: var(--kg-bokeh-state, running);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-bokeh__disc {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-bokeh__disc {
+    animation: none;
+  }
+
+  @keyframes kg-bokeh-float {
+    from {
+      transform: translate3d(0, 0, 0) scale(0.92);
+      opacity: calc(var(--_alpha) * 0.6);
+    }
+    to {
+      transform: translate3d(var(--_dx), var(--_dy), 0) scale(1.08);
+      opacity: var(--_alpha);
+    }
+  }
+}

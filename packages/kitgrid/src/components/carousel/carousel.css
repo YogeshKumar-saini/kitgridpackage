@@ -1,0 +1,285 @@
+/*
+ * Layout and motion only: the per-breakpoint slide count, coverflow's scroll-driven 3D turn
+ * (@property + view timeline) and the stack's depth math, which the gestures drive through
+ * --_r, --_toss and inline translate/rotate. The chrome lives in carousel.tsx.
+ */
+@property --kg-carousel-p {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer kg.components {
+  .kg-carousel {
+    --_gap: var(--kg-carousel-gap, calc(var(--kg-space) * 4));
+    /* Container units, so the slide and the centring padding agree on the same width. */
+    --_cover: var(--kg-carousel-cover-width, min(64cqi, 18rem));
+    --_stack: var(--kg-carousel-stack-width, min(100%, 20rem));
+    --_half: 2;
+
+    container: kg-carousel / inline-size;
+  }
+
+  .kg-carousel__track {
+    --_pv: var(--_pv-base, 1);
+
+    position: relative;
+    display: flex;
+    gap: var(--_gap);
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @container kg-carousel (min-width: 36rem) {
+    .kg-carousel__track {
+      --_pv: var(--_pv-sm, var(--_pv-base, 1));
+    }
+  }
+
+  @container kg-carousel (min-width: 52rem) {
+    .kg-carousel__track {
+      --_pv: var(--_pv-md, var(--_pv-sm, var(--_pv-base, 1)));
+    }
+  }
+
+  @container kg-carousel (min-width: 68rem) {
+    .kg-carousel__track {
+      --_pv: var(--_pv-lg, var(--_pv-md, var(--_pv-sm, var(--_pv-base, 1))));
+    }
+  }
+
+  /* Dragging hands scrolling to the pointer; snapping returns once the glide lands. */
+  .kg-carousel[data-dragging] .kg-carousel__track {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .kg-carousel__slide {
+    position: relative;
+    flex: 0 0 calc((100% - (var(--_pv) - 1) * var(--_gap)) / var(--_pv));
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .kg-carousel[data-dragging] .kg-carousel__card {
+    pointer-events: none;
+  }
+
+  /* Coverflow ----------------------------------------------------------------- */
+
+  .kg-carousel[data-variant="coverflow"] {
+    & .kg-carousel__track {
+      padding-block: calc(var(--kg-space) * 6);
+      padding-inline: calc((100cqi - var(--_cover)) / 2);
+      perspective: 1100px;
+      gap: 0;
+    }
+
+    & .kg-carousel__slide {
+      flex: 0 0 var(--_cover);
+      scroll-snap-align: center;
+      cursor: pointer;
+      transform-style: preserve-3d;
+
+      &[data-active] {
+        cursor: auto;
+      }
+    }
+
+    /* Distance from the centre in slide widths: clamped for the turn, capped for the depth.
+       Past the first neighbour, cards close up like spines on a shelf. */
+    & .kg-carousel__card {
+      --_p: var(--kg-carousel-p);
+      --_turn: clamp(-1, var(--_p), 1);
+      --_far: max(var(--_p), -1 * var(--_p));
+      --_depth: min(var(--_far), 3);
+
+      transform: translateX(
+          calc(var(--_turn) * -18% + (var(--_p) - var(--_turn)) * -62%)
+        )
+        translateZ(calc(var(--_depth) * -110px)) rotateY(calc(var(--_turn) * 56deg));
+      filter: brightness(calc(1 - var(--_depth) * 0.1));
+      opacity: clamp(0, calc(3.6 - var(--_far)), 1);
+      transform-origin: 50% 50%;
+      will-change: transform;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    .kg-carousel[data-variant="coverflow"] .kg-carousel__slide {
+      animation: kg-carousel-orbit linear both;
+      /* The -100% inset keeps progress moving for slides beyond the edges, so far cards keep
+         their true distance instead of piling up where the scrollport ends. */
+      animation-timeline: view(inline -100%);
+    }
+  }
+
+  @keyframes kg-carousel-orbit {
+    from {
+      --kg-carousel-p: var(--_half);
+    }
+    to {
+      --kg-carousel-p: calc(var(--_half) * -1);
+    }
+  }
+
+  .kg-carousel[data-variant="coverflow"][data-reduced] .kg-carousel__card {
+    transform: scale(calc(1 - var(--_depth) * 0.08));
+  }
+
+  /* Stack -------------------------------------------------------------------- */
+
+  .kg-carousel[data-variant="stack"] {
+    --_fan: 4deg;
+
+    & .kg-carousel__track {
+      display: grid;
+      place-items: center;
+      padding-block: calc(var(--kg-space) * 8) calc(var(--kg-space) * 3);
+      overflow: visible;
+      scroll-snap-type: none;
+      touch-action: pan-y;
+    }
+
+    & .kg-carousel__slide {
+      --_depth: min(var(--_r), 3);
+
+      grid-area: 1 / 1;
+      width: var(--_stack);
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      transform-origin: 50% 110%;
+      transform: translateY(calc(var(--_depth) * -0.7rem))
+        rotate(calc(var(--_depth) * var(--_fan))) scale(calc(1 - var(--_depth) * 0.055));
+      opacity: clamp(0, calc(4 - var(--_r)), 1);
+      transition:
+        transform var(--kg-duration-spring) var(--kg-ease-spring),
+        opacity var(--kg-duration-slow) var(--kg-ease-out),
+        translate var(--kg-duration-spring) var(--kg-ease-spring),
+        rotate var(--kg-duration-spring) var(--kg-ease-spring);
+
+      &:not([data-active]) {
+        pointer-events: none;
+      }
+
+      &[data-shuffle^="out"] {
+        animation: kg-carousel-shuffle-out var(--kg-duration-bounce)
+          var(--kg-ease-out);
+      }
+
+      &[data-shuffle="out-b"] {
+        animation-name: kg-carousel-shuffle-out-b;
+      }
+
+      &[data-shuffle^="in"] {
+        animation: kg-carousel-shuffle-in var(--kg-duration-bounce)
+          var(--kg-ease-out);
+      }
+
+      &[data-shuffle="in-b"] {
+        animation-name: kg-carousel-shuffle-in-b;
+      }
+    }
+
+    &:hover,
+    &:focus-within {
+      --_fan: 7deg;
+    }
+  }
+
+  .kg-carousel[data-variant="stack"][data-dragging] .kg-carousel__slide {
+    cursor: grabbing;
+    transition:
+      transform var(--kg-duration-spring) var(--kg-ease-spring),
+      opacity var(--kg-duration-slow) var(--kg-ease-out);
+  }
+
+  /* The old top card swings clear of the deck, then tucks in behind it. */
+  @keyframes kg-carousel-shuffle-out {
+    0%,
+    45% {
+      z-index: 999;
+    }
+    45% {
+      translate: calc(var(--_toss) * 82%) -6%;
+      rotate: calc(var(--_toss) * 10deg);
+    }
+    46%,
+    100% {
+      z-index: 0;
+    }
+    100% {
+      translate: 0 0;
+      rotate: 0deg;
+    }
+  }
+
+  @keyframes kg-carousel-shuffle-out-b {
+    0%,
+    45% {
+      z-index: 999;
+    }
+    45% {
+      translate: calc(var(--_toss) * 82%) -6%;
+      rotate: calc(var(--_toss) * 10deg);
+    }
+    46%,
+    100% {
+      z-index: 0;
+    }
+    100% {
+      translate: 0 0;
+      rotate: 0deg;
+    }
+  }
+
+  @keyframes kg-carousel-shuffle-in {
+    0%,
+    45% {
+      z-index: 0;
+      opacity: 1;
+    }
+    45% {
+      translate: 82% -6%;
+      rotate: 10deg;
+    }
+    46%,
+    100% {
+      z-index: 999;
+    }
+    100% {
+      translate: 0 0;
+      rotate: 0deg;
+    }
+  }
+
+  @keyframes kg-carousel-shuffle-in-b {
+    0%,
+    45% {
+      z-index: 0;
+      opacity: 1;
+    }
+    45% {
+      translate: 82% -6%;
+      rotate: 10deg;
+    }
+    46%,
+    100% {
+      z-index: 999;
+    }
+    100% {
+      translate: 0 0;
+      rotate: 0deg;
+    }
+  }
+}

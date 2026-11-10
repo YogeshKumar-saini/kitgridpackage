@@ -1,0 +1,11 @@
+/* Badge bump keyframes. */
+@layer kg.components {
+  @keyframes kg-mini-cart-bump {
+    0% {
+      transform: scale(0.4);
+    }
+    40% {
+      transform: scale(1.2);
+    }
+  }
+}

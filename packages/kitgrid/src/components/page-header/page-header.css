@@ -1,0 +1,9 @@
+/* Keyframes can't be utilities. */
+@layer kg.components {
+  @keyframes kg-page-header-rule {
+    from {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+  }
+}

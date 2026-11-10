@@ -1,0 +1,52 @@
+@layer kg.components {
+  .kg-waves {
+    &[data-mask="radial"] > .kg-waves__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-waves__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-waves__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-waves__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-waves__band {
+    color: color-mix(in oklab, var(--_color) calc(12% + var(--_depth) * 40%), transparent);
+    animation: kg-waves-roll calc((22s + var(--_i) * 7s) / var(--_speed)) linear infinite;
+    animation-direction: var(--_dir, normal);
+    animation-play-state: var(--kg-waves-state, running);
+
+    &:nth-child(even) {
+      --_dir: reverse;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-waves__band {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-waves__band {
+    animation: none;
+  }
+
+  @keyframes kg-waves-roll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+}

@@ -1,0 +1,16 @@
+/* The glyph turns in like a dial. */
+@layer kg.components {
+  @keyframes kg-mode-toggle-turn {
+    from {
+      opacity: 0;
+      transform: rotate(-120deg) scale(0.5);
+    }
+  }
+
+  @keyframes kg-mode-toggle-turn-back {
+    from {
+      opacity: 0;
+      transform: rotate(120deg) scale(0.5);
+    }
+  }
+}

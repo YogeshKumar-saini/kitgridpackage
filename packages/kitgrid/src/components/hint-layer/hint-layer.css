@@ -1,0 +1,8 @@
+@layer kg.components {
+  /* The element the current step points at is any element on the page, so it can't take utilities. */
+  [data-kg-coachmark-target] {
+    outline: 2px solid var(--kg-ink);
+    outline-offset: 4px;
+    transition: outline-offset var(--kg-duration-slow) var(--kg-ease-out);
+  }
+}

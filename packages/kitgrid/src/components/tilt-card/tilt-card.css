@@ -1,0 +1,13 @@
+/* The glare is a pointer-positioned gradient stack, which does not fit in utilities. */
+@layer kg.components {
+  .kg-tilt-card__glare {
+    --_glare: var(--kg-tilt-glare-color, var(--kg-paper-butter));
+
+    background: radial-gradient(
+      circle at var(--_gx, 50%) var(--_gy, 50%),
+      color-mix(in oklab, var(--_glare) 70%, transparent),
+      color-mix(in oklab, var(--_glare) 18%, transparent) 30%,
+      transparent 62%
+    );
+  }
+}

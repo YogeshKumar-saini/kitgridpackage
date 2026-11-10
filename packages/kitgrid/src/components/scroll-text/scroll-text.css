@@ -1,0 +1,45 @@
+/* Per-word progress math and scroll-driven ranges: calc chains over private properties that
+   utilities can't express. */
+@layer kg.components {
+  /* Fallback: one progress value (0–1) on the paragraph; word i fills over the i-th slice of it.
+     Unset, it defaults to 1, so markup without JavaScript reads at full strength. */
+  .kg-scroll-text__word {
+    --_t: clamp(0, var(--_progress, 1) * var(--_n, 1) - var(--_i, 0), 1);
+
+    opacity: calc(var(--_dim, 0.18) + (1 - var(--_dim, 0.18)) * var(--_t));
+  }
+
+  /* Native: each word runs its own animation over its slice of the paragraph's view timeline. */
+  @supports (animation-timeline: view()) {
+    .kg-scroll-text__word {
+      --_span: calc(var(--_end) - var(--_start));
+
+      animation: kg-scroll-text-word linear both;
+      animation-timeline: --kg-scroll-text;
+      animation-range: cover
+        calc(var(--_start) + var(--_span) * var(--_i, 0) / var(--_n, 1)) cover
+        calc(var(--_start) + var(--_span) * (var(--_i, 0) + 1) / var(--_n, 1));
+    }
+  }
+
+  @keyframes kg-scroll-text-word {
+    from {
+      opacity: var(--_dim, 0.18);
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-scroll-text .kg-scroll-text__word {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-scroll-text .kg-scroll-text__word {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,45 @@
+/* Slide and collapse keyframes. */
+@layer kg.components {
+  @keyframes kg-announcement-in-up {
+    from {
+      opacity: 0;
+      translate: 0 100%;
+    }
+  }
+
+  @keyframes kg-announcement-in-down {
+    from {
+      opacity: 0;
+      translate: 0 -100%;
+    }
+  }
+
+  @keyframes kg-announcement-out-up {
+    from {
+      visibility: visible;
+    }
+    to {
+      visibility: visible;
+      opacity: 0;
+      translate: 0 -100%;
+    }
+  }
+
+  @keyframes kg-announcement-out-down {
+    from {
+      visibility: visible;
+    }
+    to {
+      visibility: visible;
+      opacity: 0;
+      translate: 0 100%;
+    }
+  }
+
+  @keyframes kg-announcement-collapse {
+    to {
+      grid-template-rows: 0fr;
+      opacity: 0;
+    }
+  }
+}

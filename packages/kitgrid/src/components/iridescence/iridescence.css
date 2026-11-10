@@ -1,0 +1,112 @@
+@layer kg.components {
+  .kg-iridescence {
+    &[data-mask="radial"] > .kg-iridescence__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-iridescence__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-iridescence__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-iridescence__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-iridescence__sheen,
+  .kg-iridescence__glint {
+    animation-iteration-count: infinite;
+    animation-play-state: var(--kg-iridescence-state, running);
+  }
+
+  .kg-iridescence__sheen {
+    --_base: var(--kg-bg);
+    background-image:
+      radial-gradient(
+        ellipse 60% 50% at 30% 20%,
+        color-mix(in oklab, white 26%, transparent),
+        transparent 70%
+      ),
+      linear-gradient(
+        115deg,
+        color-mix(in oklab, var(--_c3) 34%, var(--_base)) 0%,
+        color-mix(in oklab, var(--_c1) 46%, var(--_base)) 18%,
+        color-mix(in oklab, var(--_c2) 30%, var(--_base)) 34%,
+        color-mix(in oklab, var(--_c2) 10%, var(--_base)) 46%,
+        color-mix(in oklab, var(--_c1) 40%, var(--_base)) 60%,
+        color-mix(in oklab, var(--_c3) 28%, var(--_base)) 78%,
+        color-mix(in oklab, var(--_c1) 36%, var(--_base)) 100%
+      );
+    background-size:
+      100% 100%,
+      300% 300%;
+    animation-name: kg-iridescence-shift;
+    animation-duration: calc(18s / var(--_speed));
+    animation-direction: alternate;
+    animation-timing-function: var(--kg-ease-in-out);
+  }
+
+  .kg-iridescence__glint {
+    background-image: linear-gradient(
+      100deg,
+      transparent 35%,
+      color-mix(in oklab, white 40%, transparent) 48%,
+      transparent 60%
+    );
+    background-size: 250% 100%;
+    animation-name: kg-iridescence-glint;
+    animation-duration: calc(11s / var(--_speed));
+    animation-timing-function: var(--kg-ease-in-out);
+  }
+
+  .kg-iridescence[data-foil] .kg-iridescence__layer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      62deg,
+      color-mix(in oklab, var(--kg-fg) 7%, transparent) 0 1px,
+      transparent 1px 5px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-iridescence__layer > * {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-iridescence__layer > * {
+    animation: none;
+  }
+
+  @keyframes kg-iridescence-shift {
+    from {
+      background-position:
+        0 0,
+        0% 30%;
+    }
+    to {
+      background-position:
+        0 0,
+        100% 70%;
+    }
+  }
+
+  @keyframes kg-iridescence-glint {
+    from {
+      background-position: 120% 0;
+    }
+    to {
+      background-position: -120% 0;
+    }
+  }
+}

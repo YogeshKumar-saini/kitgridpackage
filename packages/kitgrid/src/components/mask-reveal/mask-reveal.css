@@ -1,0 +1,27 @@
+@property --kg-mask-reveal-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@layer kg.components {
+  .kg-mask-reveal__reveal {
+    --kg-mask-reveal-r: 0px;
+
+    -webkit-mask-image: radial-gradient(
+      circle var(--kg-mask-reveal-r) at var(--kg-pointer-x, 50%) var(--kg-pointer-y, 50%),
+      #000 72%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      circle var(--kg-mask-reveal-r) at var(--kg-pointer-x, 50%) var(--kg-pointer-y, 50%),
+      #000 72%,
+      transparent 100%
+    );
+    transition: --kg-mask-reveal-r var(--kg-duration-spring) var(--kg-ease-spring);
+  }
+
+  .kg-mask-reveal[data-pointer="in"] .kg-mask-reveal__reveal {
+    --kg-mask-reveal-r: calc(var(--_size) / 2);
+  }
+}

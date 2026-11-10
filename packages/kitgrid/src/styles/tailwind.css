@@ -1,0 +1,20 @@
+/*
+ * For apps that use Tailwind v4. Import it before `tailwindcss`:
+ *
+ *   @import "kitgrid/tailwind.css";
+ *   @import "tailwindcss";
+ *
+ * kitgrid sits between Tailwind's base and utilities, so preflight never strips component
+ * styles and your utility classes always win. The kg-* theme (bg-kg-surface, shadow-kg-sheet,
+ * text-kg-ink, ...) becomes available to your own markup.
+ *
+ * Your Tailwind also scans kitgrid itself, so every class a component uses is generated in your
+ * utilities layer with its state variants in the right order. Otherwise a plain utility you
+ * also use (text-kg-fg-muted) would outrank the component's state rule (data-[state=active]:…).
+ */
+@layer theme, base, kg, components, utilities;
+
+@import "./styles.css";
+@import "./theme.css";
+
+@source "./";

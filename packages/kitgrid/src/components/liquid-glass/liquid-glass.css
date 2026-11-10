@@ -1,0 +1,148 @@
+/* The glass itself: light, rim and sheen are gradient and mask stacks that utilities can't express. */
+@layer kg.components {
+  .kg-liquid-glass {
+    --_tint: var(
+      --kg-glass-tint,
+      color-mix(in oklab, var(--kg-surface) 20%, transparent)
+    );
+    --_light: var(
+      --kg-glass-light,
+      color-mix(in oklab, white 92%, var(--kg-paper-butter))
+    );
+    --_s: var(--_specular, 0.7);
+    --_rim: 1.5px;
+    --_saturate: 1.9;
+
+    background-color: var(--_tint);
+    /* The face catches a little light along the top, like a meniscus, before any pointer. */
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--_light) calc((var(--_s) * 0.12) * 100%), transparent),
+      transparent 32%
+    );
+    box-shadow:
+      inset 0 1px 0 0
+        color-mix(in oklab, var(--_light) calc((var(--_s) * 0.6) * 100%), transparent),
+      inset 0 -1px 0 0
+        color-mix(in oklab, var(--_light) calc((var(--_s) * 0.14) * 100%), transparent),
+      inset 0 0 16px -6px
+        color-mix(in oklab, var(--_light) calc((var(--_s) * 0.32) * 100%), transparent),
+      0 0 0 2px var(--kg-ink),
+      4px 4px 0 2px var(--kg-ink);
+    -webkit-backdrop-filter: blur(calc(var(--_blur, 3px) * 4 + 8px))
+      saturate(var(--_saturate));
+    backdrop-filter: blur(calc(var(--_blur, 3px) * 4 + 8px)) saturate(var(--_saturate));
+    /* Rim light: a conic band that orbits the edge toward the light, with a fainter bounce
+       on the far side the way light reflects back through a curved pane. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      padding: var(--_rim);
+      border-radius: inherit;
+      pointer-events: none;
+      background: conic-gradient(
+        from var(--_angle, -45deg),
+        color-mix(
+          in oklab,
+          var(--_light) calc((var(--_s) * (0.75 + var(--_glow, 0) * 0.25)) * 100%),
+          transparent
+        ),
+        color-mix(in oklab, var(--_light) calc((var(--_s) * 0.18) * 100%), transparent)
+          50deg,
+        transparent 95deg,
+        transparent 145deg,
+        color-mix(in oklab, var(--_light) calc((var(--_s) * 0.42) * 100%), transparent)
+          180deg,
+        transparent 215deg,
+        transparent 265deg,
+        color-mix(in oklab, var(--_light) calc((var(--_s) * 0.18) * 100%), transparent)
+          310deg,
+        color-mix(
+          in oklab,
+          var(--_light) calc((var(--_s) * (0.75 + var(--_glow, 0) * 0.25)) * 100%),
+          transparent
+        )
+      );
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#000 0 0) content-box exclude,
+        linear-gradient(#000 0 0);
+    }
+
+    /* Surface sheen: a soft caustic just inside the lit edge that swells as the pointer nears. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      pointer-events: none;
+      background: conic-gradient(
+        from var(--_angle, -45deg),
+        color-mix(
+          in oklab,
+          var(--_light) calc((var(--_s) * (0.1 + var(--_glow, 0) * 0.14)) * 100%),
+          transparent
+        ),
+        transparent 70deg,
+        transparent 290deg,
+        color-mix(
+          in oklab,
+          var(--_light) calc((var(--_s) * (0.1 + var(--_glow, 0) * 0.14)) * 100%),
+          transparent
+        )
+      );
+      -webkit-mask: radial-gradient(closest-side, transparent 55%, #000);
+      mask: radial-gradient(closest-side, transparent 55%, #000);
+    }
+
+    &[data-lens="refract"] {
+      --_saturate: 1.6;
+
+      backdrop-filter: var(--_lens,) blur(var(--_blur, 3px)) saturate(var(--_saturate));
+    }
+
+  }
+
+  /* Light text needs a denser body to stay legible when bright content scrolls behind. */
+  :is([data-theme="dark"], .dark) .kg-liquid-glass {
+    --_saturate: 1.5;
+    --_tint: var(
+      --kg-glass-tint,
+      color-mix(in oklab, var(--kg-surface) 44%, transparent)
+    );
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-theme="system"] .kg-liquid-glass {
+      --_saturate: 1.5;
+      --_tint: var(
+        --kg-glass-tint,
+        color-mix(in oklab, var(--kg-surface) 44%, transparent)
+      );
+    }
+  }
+
+  /* Some people find see-through surfaces hard to read; give them the same shape, opaque. */
+  @media (prefers-reduced-transparency: reduce) {
+    .kg-liquid-glass,
+    .kg-liquid-glass[data-lens] {
+      background-color: var(--kg-surface-raised);
+      background-image: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  .kg-liquid-glass[data-lens="solid"] {
+    background-color: var(--kg-surface-raised);
+    background-image: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

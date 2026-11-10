@@ -1,0 +1,47 @@
+@layer kg.components {
+  .kg-light-rays__layer {
+    mask-image: linear-gradient(to bottom, #000 30%, transparent 100%);
+  }
+
+  .kg-light-rays__source {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--_c) 55%, transparent),
+      transparent
+    );
+  }
+
+  .kg-light-rays__ray {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--_c) calc(var(--_alpha) * 70%), transparent),
+      transparent
+    );
+    mask-image: linear-gradient(to bottom, #000, transparent 92%);
+    animation: kg-light-rays-sway calc(var(--_dur) / var(--_speed)) var(--kg-ease-in-out)
+      var(--_delay) infinite alternate;
+    animation-play-state: var(--kg-light-rays-state, running);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-light-rays__ray {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-light-rays__ray {
+    animation: none;
+  }
+
+  @keyframes kg-light-rays-sway {
+    from {
+      transform: rotate(-2.5deg) scaleX(0.8);
+      opacity: calc(var(--_alpha) * 0.45);
+    }
+    to {
+      transform: rotate(2.5deg) scaleX(1.2);
+      opacity: var(--_alpha);
+    }
+  }
+}

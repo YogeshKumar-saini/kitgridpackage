@@ -1,0 +1,48 @@
+@layer kg.components {
+  .kg-cube-field {
+    &[data-mask="radial"] > .kg-cube-field__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-cube-field__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-cube-field__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-cube-field__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-cube-field__cube {
+    animation: kg-cube-field-rise calc(6s / var(--_speed)) var(--kg-ease-in-out) infinite;
+    animation-delay: calc(var(--_wave) * -0.28s / var(--_speed));
+    animation-play-state: var(--kg-cube-field-state, running);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-cube-field__cube {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-cube-field__cube {
+    animation: none;
+  }
+
+  @keyframes kg-cube-field-rise {
+    0%,
+    100% {
+      transform: translateZ(0);
+    }
+    50% {
+      transform: translateZ(calc(var(--_h) * 1.2));
+    }
+  }
+}

@@ -1,0 +1,75 @@
+/*
+ * Tailwind v4 theme for kitgrid. Every key reads a live --kg-* token, so runtime theming,
+ * dark mode and [data-kg-scope] overrides reach Tailwind utilities too.
+ */
+/* Hover and press effects only on controls that can act: skips :disabled and aria-disabled. */
+@custom-variant interactive (&:not(:disabled, [aria-disabled="true"]));
+
+@theme inline {
+  --color-kg-bg: var(--kg-bg);
+  --color-kg-surface: var(--kg-surface);
+  --color-kg-surface-raised: var(--kg-surface-raised);
+  --color-kg-surface-sunken: var(--kg-surface-sunken);
+  --color-kg-muted: var(--kg-muted);
+  --color-kg-border: var(--kg-border);
+  --color-kg-border-strong: var(--kg-border-strong);
+  --color-kg-fg: var(--kg-fg);
+  --color-kg-fg-muted: var(--kg-fg-muted);
+  --color-kg-fg-faint: var(--kg-fg-faint);
+  --color-kg-ink: var(--kg-ink);
+  --color-kg-accent: var(--kg-accent);
+  --color-kg-accent-fg: var(--kg-accent-fg);
+  --color-kg-accent-strong: var(--kg-accent-strong);
+  --color-kg-accent-hover: var(--kg-accent-hover);
+  --color-kg-accent-display: var(--kg-accent-display);
+  --color-kg-accent-soft: var(--kg-accent-soft);
+  --color-kg-ring: var(--kg-ring);
+  --color-kg-overlay: var(--kg-overlay);
+  --color-kg-paper-sage: var(--kg-paper-sage);
+  --color-kg-paper-peach: var(--kg-paper-peach);
+  --color-kg-paper-sky: var(--kg-paper-sky);
+  --color-kg-paper-butter: var(--kg-paper-butter);
+  --color-kg-paper-rose: var(--kg-paper-rose);
+  --color-kg-success: var(--kg-success);
+  --color-kg-success-fg: var(--kg-success-fg);
+  --color-kg-warning: var(--kg-warning);
+  --color-kg-warning-fg: var(--kg-warning-fg);
+  --color-kg-danger: var(--kg-danger);
+  --color-kg-danger-fg: var(--kg-danger-fg);
+  --color-kg-info: var(--kg-info);
+  --color-kg-info-fg: var(--kg-info-fg);
+
+  --radius-kg-xs: var(--kg-radius-xs);
+  --radius-kg-sm: var(--kg-radius-sm);
+  --radius-kg-md: var(--kg-radius-md);
+  --radius-kg-lg: var(--kg-radius-lg);
+  --radius-kg-xl: var(--kg-radius-xl);
+  --radius-kg-2xl: var(--kg-radius-2xl);
+
+  --shadow-kg-xs: var(--kg-shadow-xs);
+  --shadow-kg-sm: var(--kg-shadow-sm);
+  --shadow-kg-md: var(--kg-shadow-md);
+  --shadow-kg-lg: var(--kg-shadow-lg);
+  --shadow-kg-sheet: var(--kg-shadow-sheet);
+
+  --spacing-kg: var(--kg-space);
+  --height-kg-sm: var(--kg-control-sm);
+  --height-kg-md: var(--kg-control-md);
+  --height-kg-lg: var(--kg-control-lg);
+
+  --text-kg-xs: var(--kg-text-xs);
+  --text-kg-sm: var(--kg-text-sm);
+  --text-kg-base: var(--kg-text-base);
+  --text-kg-md: var(--kg-text-md);
+  --text-kg-lg: var(--kg-text-lg);
+  --font-kg-mono: var(--kg-font-mono);
+
+  --ease-kg-out: var(--kg-ease-out);
+  --ease-kg-in-out: var(--kg-ease-in-out);
+  --ease-kg-spring: var(--kg-ease-spring);
+
+  --z-index-kg-overlay: var(--kg-z-overlay);
+  --z-index-kg-popover: var(--kg-z-popover);
+  --z-index-kg-toast: var(--kg-z-toast);
+  --z-index-kg-tooltip: var(--kg-z-tooltip);
+}

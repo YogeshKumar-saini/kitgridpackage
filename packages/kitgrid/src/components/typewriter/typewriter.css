@@ -1,0 +1,13 @@
+/* Keyframes can't be utilities. */
+@layer kg.components {
+  @keyframes kg-typewriter-blink {
+    0%,
+    42% {
+      opacity: 1;
+    }
+    50%,
+    92% {
+      opacity: 0;
+    }
+  }
+}

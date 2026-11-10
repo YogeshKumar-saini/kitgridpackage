@@ -1,0 +1,7 @@
+@layer kg.components {
+  @keyframes kg-delivery-draw {
+    from {
+      transform: scaleX(0);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+/* Keyframes only: the shimmer band's slide. */
+@layer kg.components {
+  @keyframes kg-skeleton-sweep {
+    from {
+      translate: -120% 0;
+    }
+    to {
+      translate: 280% 0;
+    }
+  }
+}

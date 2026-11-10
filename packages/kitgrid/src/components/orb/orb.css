@@ -1,0 +1,83 @@
+@layer kg.components {
+  .kg-orb__halo {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--_c) 45%, transparent),
+      color-mix(in oklab, var(--_c) 12%, transparent) 55%,
+      transparent
+    );
+    animation: kg-orb-breathe calc(9s / var(--_speed)) var(--kg-ease-in-out) infinite
+      alternate;
+  }
+
+  .kg-orb__sphere {
+    background: radial-gradient(
+      circle at 34% 28%,
+      color-mix(in oklab, var(--_warm), white 45%) 0%,
+      var(--_warm) 16%,
+      var(--_c) 38%,
+      var(--_deep) 78%,
+      color-mix(in oklab, var(--_deep) 60%, var(--kg-bg)) 100%
+    );
+    box-shadow:
+      inset -1.5rem -2rem 3rem color-mix(in oklab, var(--kg-bg) 45%, transparent),
+      0 2rem 4rem -1.5rem color-mix(in oklab, var(--_c) 40%, transparent);
+  }
+
+  .kg-orb__swirl {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      color-mix(in oklab, var(--_warm) 55%, transparent) 70deg,
+      transparent 150deg,
+      color-mix(in oklab, var(--_c) 50%, transparent) 230deg,
+      transparent 300deg
+    );
+    animation: kg-orb-spin calc(16s / var(--_speed)) linear infinite;
+  }
+
+  .kg-orb__shine {
+    background: radial-gradient(closest-side, color-mix(in oklab, white 55%, transparent), transparent);
+  }
+
+  /* The orbit light: a conic sweep masked down to a hairline ring just outside the sphere. */
+  .kg-orb__rim {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg 220deg,
+      color-mix(in oklab, var(--_warm) 90%, transparent) 300deg,
+      transparent 360deg
+    );
+    mask-image: radial-gradient(closest-side, transparent 96%, #000 97.5%, transparent 100%);
+    animation: kg-orb-spin calc(7s / var(--_speed)) linear infinite reverse;
+  }
+
+  .kg-orb__layer * {
+    animation-play-state: var(--kg-orb-state, running);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-orb__layer * {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-orb__layer * {
+    animation: none;
+  }
+
+  @keyframes kg-orb-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  @keyframes kg-orb-breathe {
+    from {
+      transform: scale(0.92);
+    }
+    to {
+      transform: scale(1.06);
+    }
+  }
+}

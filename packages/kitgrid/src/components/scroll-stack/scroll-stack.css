@@ -1,0 +1,45 @@
+/* The scroll-driven recede: a registered progress property on a view timeline, and the pin and recede maths (calc over private properties, which utilities mangle). */
+@property --kg-stack-progress {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer kg.components {
+  .kg-scroll-stack__item {
+    top: calc(var(--_top, 96px) + var(--_i, 0) * var(--_peek, 14px));
+    transform: perspective(1600px) rotateX(calc(var(--_p) * min(var(--_rank, 0), 1) * 4deg))
+      scale(calc(1 - var(--_p) * var(--_rank, 0) * var(--_step, 0.05)));
+  }
+
+  .kg-scroll-stack[data-reduced] .kg-scroll-stack__item {
+    top: auto;
+    transform: none;
+  }
+
+  @supports (animation-timeline: view()) and (timeline-scope: --kg) {
+    .kg-scroll-stack[data-driver="css"]:not([data-reduced]) .kg-scroll-stack__item {
+      animation: kg-stack-recede linear both;
+      animation-timeline: var(--_next);
+      animation-range: cover 0% cover
+        calc(100% - var(--_top, 96px) - (var(--_i, 0) + 1) * var(--_peek, 14px));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-scroll-stack .kg-scroll-stack__item {
+      top: auto;
+      transform: none;
+      animation: none;
+    }
+  }
+
+  @keyframes kg-stack-recede {
+    from {
+      --kg-stack-progress: 0;
+    }
+    to {
+      --kg-stack-progress: 1;
+    }
+  }
+}

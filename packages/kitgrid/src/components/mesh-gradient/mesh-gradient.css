@@ -1,0 +1,62 @@
+@layer kg.components {
+  .kg-mesh-gradient__point {
+    background: radial-gradient(
+      closest-side,
+      var(--_c),
+      color-mix(in oklab, var(--_c) 55%, transparent) 40%,
+      color-mix(in oklab, var(--_c) 15%, transparent) 72%,
+      transparent
+    );
+  }
+
+  .kg-mesh-gradient[data-animated] .kg-mesh-gradient__point {
+    animation: kg-mesh-gradient-a calc((20s + var(--_i) * 3s) / var(--kg-mesh-gradient-speed, 1))
+      var(--kg-ease-in-out) infinite alternate;
+
+    &[data-drift="2"] {
+      animation-name: kg-mesh-gradient-b;
+    }
+
+    &[data-drift="3"] {
+      animation-name: kg-mesh-gradient-c;
+    }
+
+    &[data-drift="4"] {
+      animation-name: kg-mesh-gradient-d;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-mesh-gradient[data-animated] .kg-mesh-gradient__point {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-mesh-gradient[data-animated] .kg-mesh-gradient__point {
+    animation: none;
+  }
+
+  @keyframes kg-mesh-gradient-a {
+    to {
+      transform: translate3d(14cqw, 10cqh, 0) scale(1.1);
+    }
+  }
+
+  @keyframes kg-mesh-gradient-b {
+    to {
+      transform: translate3d(-16cqw, 12cqh, 0) scale(0.9);
+    }
+  }
+
+  @keyframes kg-mesh-gradient-c {
+    to {
+      transform: translate3d(-10cqw, -14cqh, 0) scale(1.15);
+    }
+  }
+
+  @keyframes kg-mesh-gradient-d {
+    to {
+      transform: translate3d(12cqw, -10cqh, 0) scale(0.92);
+    }
+  }
+}

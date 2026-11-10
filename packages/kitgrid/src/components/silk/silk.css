@@ -1,0 +1,90 @@
+@layer kg.components {
+  .kg-silk {
+    &[data-mask="radial"] > .kg-silk__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-silk__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-silk__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-silk__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-silk__layer {
+    background: linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--_deep) 70%, transparent),
+      transparent 70%
+    );
+  }
+
+  .kg-silk__fold,
+  .kg-silk__sheen {
+    animation: kg-silk-flow linear infinite;
+    animation-play-state: var(--kg-silk-state, running);
+  }
+
+  /* Each sheet repeats every 1/6 of its width, so sliding one third loops seamlessly. */
+  .kg-silk__fold {
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in oklab, var(--_c) 34%, transparent) 5%,
+      color-mix(in oklab, var(--_deep) 55%, transparent) 9.5%,
+      color-mix(in oklab, var(--_c) 14%, transparent) 13%,
+      transparent 16.6667%
+    );
+
+    &[data-fold="1"] {
+      animation-duration: calc(40s / var(--_speed));
+    }
+
+    &[data-fold="2"] {
+      animation-duration: calc(58s / var(--_speed));
+      animation-direction: reverse;
+    }
+
+    &[data-fold="3"] {
+      animation-duration: calc(76s / var(--_speed));
+    }
+  }
+
+  .kg-silk__sheen {
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent 0% 12%,
+      color-mix(in oklab, var(--kg-fg) 9%, transparent) 15.5%,
+      transparent 19% 33.3333%
+    );
+    animation-duration: calc(30s / var(--_speed));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-silk__layer > * {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-silk__layer > * {
+    animation: none;
+  }
+
+  @keyframes kg-silk-flow {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-33.3333%, 0, 0);
+    }
+  }
+}

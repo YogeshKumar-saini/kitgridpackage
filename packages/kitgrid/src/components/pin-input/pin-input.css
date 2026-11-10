@@ -1,0 +1,21 @@
+@layer kg.components {
+  @keyframes kg-pin-input-pop {
+    from {
+      scale: 0.92;
+    }
+  }
+
+  @keyframes kg-pin-input-shake {
+    15%,
+    55% {
+      translate: -6px 0;
+    }
+    35%,
+    75% {
+      translate: 5px 0;
+    }
+    90% {
+      translate: -2px 0;
+    }
+  }
+}

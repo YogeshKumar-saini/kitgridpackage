@@ -1,0 +1,18 @@
+/* Row enter and exit keyframes. */
+@layer kg.components {
+  @keyframes kg-cart-row-in {
+    from {
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transform: translateX(1rem);
+    }
+  }
+
+  @keyframes kg-cart-row-out {
+    to {
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transform: translateX(-1rem);
+    }
+  }
+}

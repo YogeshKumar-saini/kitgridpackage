@@ -1,0 +1,46 @@
+/* Registered so the edge light can turn as a typed, animatable angle. */
+@property --kg-gradient-border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 200deg;
+}
+
+@layer kg.components {
+  .kg-gradient-border {
+    background:
+      linear-gradient(var(--kg-surface), var(--kg-surface)) padding-box,
+      conic-gradient(
+          from var(--kg-gradient-border-angle),
+          var(--_c3) 0deg,
+          var(--_c3) 200deg,
+          var(--_c2) 270deg,
+          var(--_c1) 320deg,
+          var(--_c3) 360deg
+        )
+        border-box;
+
+    &[data-animated] {
+      animation: kg-gradient-border-turn var(--kg-gradient-border-duration, 6s) linear
+        infinite;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-gradient-border[data-animated] {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-gradient-border[data-animated] {
+    animation: none;
+  }
+
+  @keyframes kg-gradient-border-turn {
+    from {
+      --kg-gradient-border-angle: 0deg;
+    }
+    to {
+      --kg-gradient-border-angle: 360deg;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+@layer kg.components {
+  [data-kg-motion="reduce"] .kg-wishlist-button__burst {
+    display: none;
+  }
+
+  @keyframes kg-wishlist-beat {
+    from {
+      scale: 0.55;
+    }
+  }
+
+  @keyframes kg-wishlist-ring {
+    from {
+      opacity: 0.9;
+      scale: 0.35;
+    }
+    to {
+      opacity: 0;
+      scale: 1.05;
+    }
+  }
+
+  @keyframes kg-wishlist-particle {
+    from {
+      opacity: 1;
+      transform: rotate(var(--_angle)) translateY(-0.5em) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: rotate(var(--_angle)) translateY(-1.15em) scale(0.3);
+    }
+  }
+}

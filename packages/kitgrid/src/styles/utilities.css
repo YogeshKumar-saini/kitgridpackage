@@ -1,0 +1,12 @@
+/* Build input: the utilities kitgrid's own components use, compiled into dist/styles.css. */
+@import "tailwindcss/theme" layer(theme);
+@import "tailwindcss/utilities" layer(utilities);
+@import "./theme.css";
+
+/* Library builds only: spacing utilities follow the density token without touching the host. */
+@theme inline {
+  --spacing: var(--kg-space);
+}
+
+@source "../";
+@source not "../**/*.test.tsx";

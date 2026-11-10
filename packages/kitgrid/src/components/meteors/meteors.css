@@ -1,0 +1,55 @@
+/* The flight transform, tail gradient and loop read private properties in calc(). */
+@layer kg.components {
+  /* The base transform is the midpoint of the flight: the static frame for reduced motion. */
+  .kg-meteors__meteor {
+    --_angle: var(--kg-meteors-angle, 130deg);
+    --_travel: var(--kg-meteors-travel, 120cqmax);
+
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--_color) 12%, transparent),
+      0 0 10px 1px color-mix(in oklab, var(--_color) 55%, transparent);
+    transform: rotate(var(--_angle)) translateX(calc(var(--_travel) * 0.5));
+    animation-name: kg-meteors-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      width: calc(var(--kg-meteors-tail, 90px) * var(--_scale, 1));
+      height: 1px;
+      translate: 0 -50%;
+      border-radius: 1px;
+      background: linear-gradient(to left, var(--_color), transparent);
+      opacity: 0.85;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-meteors__meteor {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-meteors__meteor {
+    animation: none;
+  }
+
+  @keyframes kg-meteors-fall {
+    0% {
+      opacity: 0;
+      transform: rotate(var(--_angle)) translateX(0);
+    }
+    8%,
+    70% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(var(--_angle)) translateX(var(--_travel));
+    }
+  }
+}

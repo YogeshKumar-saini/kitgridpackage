@@ -1,0 +1,90 @@
+@layer kg.components {
+  .kg-moire {
+    &[data-mask="radial"] > .kg-moire__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-moire__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-moire__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-moire__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-moire__sheet {
+    animation-duration: calc(26s / var(--_speed));
+    animation-timing-function: var(--kg-ease-in-out);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: var(--kg-moire-state, running);
+  }
+
+  .kg-moire[data-pattern="rings"] .kg-moire__sheet {
+    background-image: repeating-radial-gradient(
+      circle at 50% 50%,
+      var(--_c) 0 1px,
+      transparent 1px var(--_s)
+    );
+  }
+
+  .kg-moire[data-pattern="lines"] .kg-moire__sheet {
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--_c) 0 1px,
+      transparent 1px var(--_s)
+    );
+  }
+
+  .kg-moire__sheet[data-sheet="b"] {
+    animation-name: kg-moire-drift;
+  }
+
+  .kg-moire[data-pattern="lines"] .kg-moire__sheet[data-sheet="b"] {
+    animation-name: kg-moire-tilt;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-moire__sheet {
+      animation: none !important;
+    }
+
+    .kg-moire__sheet[data-sheet="b"] {
+      transform: translate3d(4%, 3%, 0) rotate(2deg);
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-moire__sheet {
+    animation: none !important;
+  }
+
+  [data-kg-motion="reduce"] .kg-moire__sheet[data-sheet="b"] {
+    transform: translate3d(4%, 3%, 0) rotate(2deg);
+  }
+
+  @keyframes kg-moire-drift {
+    from {
+      transform: translate3d(-6%, -3%, 0);
+    }
+    to {
+      transform: translate3d(7%, 5%, 0);
+    }
+  }
+
+  @keyframes kg-moire-tilt {
+    from {
+      transform: rotate(-4deg);
+    }
+    to {
+      transform: rotate(4deg);
+    }
+  }
+}

@@ -1,0 +1,14 @@
+@layer kg.components {
+  @keyframes kg-list-open {
+    from {
+      grid-template-rows: 0fr;
+    }
+  }
+
+  @keyframes kg-list-pop {
+    from {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.94);
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@kitgrid/cli",
+  "version": "0.1.0",
+  "description": "Copy editable Tailwind source of kitgrid components into your project.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "kitgrid": "./bin/kitgrid.js"
+  },
+  "exports": "./src/cli.js",
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

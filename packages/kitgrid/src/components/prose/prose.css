@@ -1,0 +1,169 @@
+/* Element selectors for HTML the caller does not control: no class to put a utility on. */
+@layer kg.components {
+  .kg-prose {
+    --_flow: 1.15em;
+
+    & :where(*) {
+      margin-block: 0;
+    }
+    & :where(* + *) {
+      margin-block-start: var(--_flow);
+    }
+
+    & :where(h1, h2, h3, h4) {
+      color: var(--kg-fg);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+      text-wrap: balance;
+    }
+    & :where(h1) {
+      font-size: 2.1em;
+      letter-spacing: -0.025em;
+    }
+    & :where(h2) {
+      font-size: 1.5em;
+    }
+    & :where(h3) {
+      font-size: 1.22em;
+    }
+    & :where(h4) {
+      font-size: 1em;
+    }
+    /* More room above a heading than below, so it binds to the text it introduces. */
+    & :where(* + :is(h1, h2, h3, h4)) {
+      margin-block-start: 1.9em;
+    }
+    & :where(:is(h1, h2, h3, h4) + *) {
+      margin-block-start: 0.6em;
+    }
+
+    & :where(p, li) {
+      text-wrap: pretty;
+    }
+    & :where(strong) {
+      color: var(--kg-fg);
+      font-weight: 600;
+    }
+
+    & :where(a) {
+      color: var(--kg-accent-strong);
+      font-weight: 500;
+      text-decoration-color: color-mix(in oklab, var(--kg-accent-strong) 40%, transparent);
+      text-underline-offset: 0.22em;
+    }
+    & :where(a:hover) {
+      text-decoration-color: currentColor;
+    }
+    & :where(a:focus-visible) {
+      outline: 2px solid var(--kg-ring);
+      outline-offset: 2px;
+      border-radius: var(--kg-radius-xs);
+    }
+
+    & :where(ul, ol) {
+      padding-inline-start: 1.4em;
+    }
+    & :where(li + li) {
+      margin-block-start: 0.4em;
+    }
+    & :where(li > ul, li > ol) {
+      margin-block-start: 0.4em;
+    }
+    & :where(ul > li)::marker {
+      color: var(--kg-ink);
+    }
+    & :where(ol > li)::marker {
+      color: var(--kg-fg-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    & :where(blockquote) {
+      padding: 0.75em 1em;
+      color: var(--kg-fg);
+      font-style: italic;
+      background: var(--kg-paper-sage);
+      border-inline-start: 4px solid var(--kg-ink);
+      border-radius: var(--kg-radius-sm);
+    }
+
+    & :where(code):not(:where(pre code)) {
+      padding: 0.1em 0.35em;
+      font-family: var(--kg-font-mono);
+      font-size: 0.86em;
+      color: var(--kg-fg);
+      background: var(--kg-muted);
+      border: 1px solid var(--kg-border);
+      border-radius: var(--kg-radius-sm);
+    }
+    & :where(pre) {
+      padding: 1em 1.15em;
+      overflow-x: auto;
+      font-family: var(--kg-font-mono);
+      font-size: 0.84em;
+      line-height: 1.6;
+      color: var(--kg-fg);
+      background: var(--kg-surface);
+      border: 2px solid var(--kg-ink);
+      border-radius: var(--kg-radius-lg);
+      box-shadow: var(--kg-shadow-sm);
+    }
+
+    & :where(hr) {
+      margin-block: 2.2em;
+      border: 0;
+      border-block-start: 2px solid var(--kg-border);
+    }
+
+    & :where(img, video, figure) {
+      max-inline-size: 100%;
+      height: auto;
+      border-radius: var(--kg-radius-lg);
+    }
+    & :where(figcaption) {
+      margin-block-start: 0.6em;
+      font-size: 0.86em;
+      color: var(--kg-fg-muted);
+    }
+
+    & :where(table) {
+      inline-size: 100%;
+      font-size: 0.92em;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    & :where(th) {
+      color: var(--kg-fg);
+      font-weight: 600;
+      text-align: start;
+      border-block-end: 2px solid var(--kg-ink);
+    }
+    & :where(th, td) {
+      padding: 0.55em 0.75em;
+    }
+    & :where(td) {
+      border-block-end: 1px solid var(--kg-border);
+    }
+
+    & :where(kbd) {
+      padding: 0.05em 0.35em;
+      font-family: var(--kg-font-mono);
+      font-size: 0.82em;
+      color: var(--kg-fg);
+      background: var(--kg-surface);
+      border: 1px solid var(--kg-ink);
+      border-radius: var(--kg-radius-sm);
+      box-shadow: 0 2px 0 var(--kg-ink);
+    }
+
+    & :where(mark) {
+      color: inherit;
+      background: var(--kg-paper-butter);
+      border-radius: var(--kg-radius-xs);
+    }
+
+    & > :where(:first-child) {
+      margin-block-start: 0;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+/*
+ * The band's gradient stack and its off states stay here: the image is (2 + band) times the text's
+ * width with the band at its centre, so stepping background-position from 100% to 0% carries it
+ * from just past the start edge to just past the end edge, whatever its width.
+ */
+@layer kg.components {
+  .kg-shiny-text {
+    --_half: calc(var(--_band, 0.32) / (2 * (2 + var(--_band, 0.32))) * 100%);
+
+    background-image: linear-gradient(
+      100deg,
+      var(--_base) calc(50% - var(--_half)),
+      var(--_shine) 50%,
+      var(--_base) calc(50% + var(--_half))
+    );
+    background-repeat: no-repeat;
+    background-size: calc((2 + var(--_band, 0.32)) * 100%) 100%;
+    background-position: 100% 0;
+  }
+
+  @keyframes kg-shiny-text {
+    from {
+      background-position: 100% 0;
+    }
+    62%,
+    to {
+      background-position: 0% 0;
+    }
+  }
+
+  .kg-shiny-text[data-disabled] {
+    animation: none;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-shiny-text {
+      animation: none;
+      background: none;
+      -webkit-text-fill-color: currentColor;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-shiny-text {
+    animation: none;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  @media (forced-colors: active) {
+    .kg-shiny-text {
+      background: none;
+      -webkit-text-fill-color: currentColor;
+    }
+  }
+}

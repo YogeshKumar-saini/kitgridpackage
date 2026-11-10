@@ -1,0 +1,15 @@
+@layer kg.components {
+  @keyframes kg-mobile-nav-forward {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+  }
+
+  @keyframes kg-mobile-nav-back {
+    from {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+  }
+}

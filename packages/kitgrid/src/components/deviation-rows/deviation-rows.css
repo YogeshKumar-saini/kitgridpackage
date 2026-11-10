@@ -1,0 +1,8 @@
+/* Keyframes can't be utilities. */
+@layer kg.components {
+  @keyframes kg-deviation-grow {
+    from {
+      transform: scaleX(0);
+    }
+  }
+}

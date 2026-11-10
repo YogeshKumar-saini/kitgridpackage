@@ -1,0 +1,51 @@
+@layer kg.components {
+  .kg-stripes {
+    &[data-mask="radial"] > .kg-stripes__layer {
+      mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-stripes__layer {
+      mask-image: linear-gradient(to bottom, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="bottom"] > .kg-stripes__layer {
+      mask-image: linear-gradient(to top, #000 20%, transparent 95%);
+    }
+
+    &[data-mask="edges"] > .kg-stripes__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  .kg-stripes__band {
+    background-image: repeating-linear-gradient(
+      var(--kg-stripes-angle, -45deg),
+      var(--_c) 0 var(--kg-stripes-width, 1px),
+      transparent var(--kg-stripes-width, 1px) var(--_period)
+    );
+    animation: kg-stripes-scroll calc(1.2s / var(--kg-stripes-speed, 1)) linear infinite;
+    animation-play-state: var(--kg-stripes-state, running);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-stripes__band {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-stripes__band {
+    animation: none;
+  }
+
+  @keyframes kg-stripes-scroll {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: var(--kg-stripes-shift-x, 0) var(--kg-stripes-shift-y, 0);
+    }
+  }
+}

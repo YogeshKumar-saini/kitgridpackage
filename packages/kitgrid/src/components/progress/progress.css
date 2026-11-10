@@ -1,0 +1,20 @@
+/* Keyframes only: the stripe slide and the indeterminate sweep. */
+@layer kg.components {
+  @keyframes kg-progress-stripes {
+    from {
+      background-position: 1rem 0;
+    }
+    to {
+      background-position: 0 0;
+    }
+  }
+
+  @keyframes kg-progress-sweep {
+    from {
+      translate: -100% 0;
+    }
+    to {
+      translate: 250% 0;
+    }
+  }
+}

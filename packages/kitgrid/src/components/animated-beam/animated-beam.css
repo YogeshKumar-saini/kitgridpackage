@@ -1,0 +1,10 @@
+@layer kg.components {
+  @keyframes kg-beam-pulse {
+    from {
+      stroke-dashoffset: var(--_len);
+    }
+    to {
+      stroke-dashoffset: -1;
+    }
+  }
+}

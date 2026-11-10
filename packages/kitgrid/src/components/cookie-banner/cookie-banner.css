@@ -1,0 +1,8 @@
+@layer kg.components {
+  @keyframes kg-cookie-enter {
+    from {
+      opacity: 0;
+      transform: perspective(800px) rotateX(18deg) translateY(1.5rem);
+    }
+  }
+}

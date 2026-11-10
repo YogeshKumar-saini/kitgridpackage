@@ -1,0 +1,17 @@
+@layer kg.components {
+  @keyframes kg-swipe-deck-rise {
+    from {
+      opacity: 0;
+      transform: translateY(calc((var(--_d) + 1) * 0.875rem))
+        scale(calc(1 - (var(--_d) + 1) * 0.06));
+    }
+  }
+
+  @keyframes kg-swipe-deck-return {
+    from {
+      opacity: 0;
+      transform: translateX(calc(var(--_from) * 120%))
+        rotate(calc(var(--_from) * 16deg));
+    }
+  }
+}

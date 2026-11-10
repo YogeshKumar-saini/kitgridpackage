@@ -1,0 +1,300 @@
+@layer kg.tokens {
+  :root,
+  [data-theme="light"],
+  .light {
+    --kg-bg: oklch(0.927 0.012 178);
+    --kg-surface: oklch(0.995 0.003 170);
+    --kg-surface-raised: oklch(0.998 0.002 170);
+    --kg-surface-sunken: oklch(0.955 0.01 178);
+    --kg-muted: oklch(0.945 0.013 178);
+    --kg-border: oklch(0.84 0.022 178);
+    --kg-border-strong: oklch(0.29 0.045 175);
+    --kg-fg: oklch(0.29 0.045 175);
+    --kg-fg-muted: oklch(0.44 0.035 175);
+    --kg-fg-faint: oklch(0.52 0.03 175);
+    --kg-accent: oklch(0.29 0.045 175);
+    --kg-accent-fg: oklch(0.955 0.012 178);
+    --kg-ink: oklch(0.29 0.045 175);
+    --kg-paper-sage: oklch(0.8 0.055 180);
+    --kg-paper-peach: oklch(0.86 0.06 60);
+    --kg-paper-sky: oklch(0.86 0.045 255);
+    --kg-paper-butter: oklch(0.92 0.08 95);
+    --kg-paper-rose: oklch(0.87 0.05 15);
+    --kg-success: oklch(0.5 0.12 155);
+    --kg-success-fg: oklch(0.98 0.01 155);
+    --kg-warning: oklch(0.78 0.14 80);
+    --kg-warning-fg: oklch(0.27 0.06 75);
+    --kg-danger: oklch(0.54 0.19 28);
+    --kg-danger-fg: oklch(0.99 0.008 25);
+    --kg-info: oklch(0.52 0.12 245);
+    --kg-info-fg: oklch(0.99 0.008 245);
+    --kg-overlay: oklch(0.22 0.04 175 / 0.45);
+    --kg-shadow-tint: 0.29 0.045 175;
+    --kg-mix-strong: black;
+    color-scheme: light;
+  }
+
+  [data-theme="dark"],
+  .dark {
+    --kg-bg: oklch(0.2 0.025 175);
+    --kg-surface: oklch(0.26 0.035 175);
+    --kg-surface-raised: oklch(0.3 0.038 175);
+    --kg-surface-sunken: oklch(0.17 0.02 175);
+    --kg-muted: oklch(0.3 0.03 175);
+    --kg-border: oklch(0.38 0.03 175);
+    --kg-border-strong: oklch(0.86 0.05 175);
+    --kg-fg: oklch(0.95 0.015 170);
+    --kg-fg-muted: oklch(0.8 0.025 170);
+    --kg-fg-faint: oklch(0.7 0.025 170);
+    --kg-accent: oklch(0.86 0.06 175);
+    --kg-accent-fg: oklch(0.22 0.04 175);
+    --kg-ink: oklch(0.72 0.07 175);
+    --kg-paper-sage: oklch(0.36 0.05 180);
+    --kg-paper-peach: oklch(0.4 0.06 55);
+    --kg-paper-sky: oklch(0.38 0.05 255);
+    --kg-paper-butter: oklch(0.42 0.06 95);
+    --kg-paper-rose: oklch(0.38 0.06 15);
+    --kg-success: oklch(0.76 0.14 155);
+    --kg-success-fg: oklch(0.2 0.05 155);
+    --kg-warning: oklch(0.83 0.14 80);
+    --kg-warning-fg: oklch(0.24 0.06 80);
+    --kg-danger: oklch(0.72 0.17 28);
+    --kg-danger-fg: oklch(0.18 0.05 25);
+    --kg-info: oklch(0.74 0.12 245);
+    --kg-info-fg: oklch(0.18 0.04 245);
+    --kg-overlay: oklch(0.1 0.02 175 / 0.66);
+    --kg-shadow-tint: 0 0 0;
+    --kg-mix-strong: white;
+    color-scheme: dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    [data-theme="system"] {
+      --kg-bg: oklch(0.2 0.025 175);
+      --kg-surface: oklch(0.26 0.035 175);
+      --kg-surface-raised: oklch(0.3 0.038 175);
+      --kg-surface-sunken: oklch(0.17 0.02 175);
+      --kg-muted: oklch(0.3 0.03 175);
+      --kg-border: oklch(0.38 0.03 175);
+      --kg-border-strong: oklch(0.86 0.05 175);
+      --kg-fg: oklch(0.95 0.015 170);
+      --kg-fg-muted: oklch(0.8 0.025 170);
+      --kg-fg-faint: oklch(0.7 0.025 170);
+      --kg-accent: oklch(0.86 0.06 175);
+      --kg-accent-fg: oklch(0.22 0.04 175);
+      --kg-ink: oklch(0.72 0.07 175);
+      --kg-paper-sage: oklch(0.36 0.05 180);
+      --kg-paper-peach: oklch(0.4 0.06 55);
+      --kg-paper-sky: oklch(0.38 0.05 255);
+      --kg-paper-butter: oklch(0.42 0.06 95);
+      --kg-paper-rose: oklch(0.38 0.06 15);
+      --kg-success: oklch(0.76 0.14 155);
+      --kg-success-fg: oklch(0.2 0.05 155);
+      --kg-warning: oklch(0.83 0.14 80);
+      --kg-warning-fg: oklch(0.24 0.06 80);
+      --kg-danger: oklch(0.72 0.17 28);
+      --kg-danger-fg: oklch(0.18 0.05 25);
+      --kg-info: oklch(0.74 0.12 245);
+      --kg-info-fg: oklch(0.18 0.04 245);
+      --kg-overlay: oklch(0.1 0.02 175 / 0.66);
+      --kg-shadow-tint: 0 0 0;
+      --kg-mix-strong: white;
+      color-scheme: dark;
+    }
+  }
+
+  /*
+   * Derived from the seeds above and re-declared on every scope that can change a seed, so
+   * setting `--kg-accent` or `--kg-radius` on a [data-kg-scope] element rethemes that
+   * subtree, derived shades included.
+   */
+  :root,
+  [data-theme],
+  .light,
+  .dark,
+  [data-kg-scope] {
+    /* -hover tints fills. -strong pulls the accent toward the text color until it reads as
+       text and as a focus ring on surfaces, so even a light accent like orange stays AA. */
+    --kg-accent-hover: color-mix(
+      in oklab,
+      var(--kg-accent),
+      var(--kg-mix-strong) 10%
+    );
+    --kg-accent-strong: color-mix(in oklab, var(--kg-accent), var(--kg-fg) 38%);
+    /* Brighter than -strong for display-size accent type, which only needs 3:1. */
+    --kg-accent-display: color-mix(in oklab, var(--kg-accent), var(--kg-fg) 22%);
+    --kg-accent-soft: color-mix(in oklab, var(--kg-accent) 14%, transparent);
+    --kg-accent-edge: color-mix(in oklab, var(--kg-accent) 42%, transparent);
+    --kg-accent-glow: color-mix(in oklab, var(--kg-accent) 55%, transparent);
+    --kg-ring: var(--kg-accent-strong);
+
+    --kg-radius-xs: calc(var(--kg-radius) * 0.4);
+    --kg-radius-sm: calc(var(--kg-radius) * 0.6);
+    --kg-radius-md: calc(var(--kg-radius) * 0.8);
+    --kg-radius-lg: var(--kg-radius);
+    --kg-radius-xl: calc(var(--kg-radius) * 1.5);
+    --kg-radius-2xl: calc(var(--kg-radius) * 2);
+
+    --kg-space: calc(0.25rem * var(--kg-density));
+    --kg-control-sm: calc(2rem * var(--kg-density));
+    --kg-control-md: calc(2.5rem * var(--kg-density));
+    --kg-control-lg: calc(3rem * var(--kg-density));
+
+    /* Paper Layers: depth is a crisp offset sheet in ink, never a blur. */
+    --kg-shadow-xs: 2px 2px 0 var(--kg-ink);
+    --kg-shadow-sm: 3px 3px 0 var(--kg-ink);
+    --kg-shadow-md: 5px 5px 0 var(--kg-ink);
+    --kg-shadow-lg: 8px 8px 0 var(--kg-ink);
+    --kg-shadow-sheet: var(--kg-shadow-md);
+    --kg-shadow-inset-edge: inset 0 0 0 0 transparent;
+  }
+
+  :root {
+    --kg-radius: 0.875rem;
+    --kg-radius-full: 9999px;
+    --kg-density: 1;
+
+    --kg-font-mono:
+      ui-monospace, "SFMono-Regular", "JetBrains Mono", "Cascadia Code", Menlo,
+      monospace;
+    --kg-text-xs: 0.75rem;
+    --kg-text-sm: 0.8125rem;
+    --kg-text-base: 0.875rem;
+    --kg-text-md: 1rem;
+    --kg-text-lg: 1.125rem;
+    --kg-text-xl: 1.375rem;
+    --kg-text-2xl: 1.75rem;
+    --kg-text-3xl: 2.25rem;
+    --kg-text-4xl: 3rem;
+    --kg-text-5xl: 3.75rem;
+
+    --kg-duration-instant: 80ms;
+    --kg-duration-fast: 140ms;
+    --kg-duration-base: 200ms;
+    --kg-duration-slow: 320ms;
+    --kg-duration-slower: 500ms;
+    --kg-duration-spring: 640ms;
+    --kg-duration-bounce: 990ms;
+
+    --kg-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --kg-ease-in: cubic-bezier(0.3, 0, 0.8, 0.15);
+    --kg-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    /* Sampled from a damped spring (stiffness 260, damping 22): ~5% overshoot. */
+    --kg-ease-spring: linear(
+      0,
+      0.03,
+      0.105,
+      0.208,
+      0.325,
+      0.445,
+      0.56,
+      0.666,
+      0.759,
+      0.838,
+      0.903,
+      0.953,
+      0.992,
+      1.019,
+      1.037,
+      1.048,
+      1.053,
+      1.053,
+      1.05,
+      1.046,
+      1.04,
+      1.033,
+      1.027,
+      1.021,
+      1.016,
+      1.011,
+      1.007,
+      1.004,
+      1.002,
+      1,
+      0.999,
+      0.998,
+      0.997,
+      0.997,
+      0.997,
+      0.997,
+      0.998,
+      0.998,
+      0.998,
+      0.999,
+      1
+    );
+    /* Stiffness 320, damping 14: ~26% overshoot for playful confirmations. */
+    --kg-ease-bounce: linear(
+      0,
+      0.087,
+      0.298,
+      0.563,
+      0.821,
+      1.033,
+      1.177,
+      1.25,
+      1.26,
+      1.225,
+      1.163,
+      1.092,
+      1.027,
+      0.977,
+      0.945,
+      0.932,
+      0.933,
+      0.946,
+      0.963,
+      0.981,
+      0.998,
+      1.009,
+      1.016,
+      1.018,
+      1.017,
+      1.013,
+      1.008,
+      1.003,
+      1,
+      0.997,
+      0.995,
+      0.995,
+      0.996,
+      0.997,
+      0.998,
+      0.999,
+      1,
+      1.001,
+      1.001,
+      1.001,
+      1
+    );
+
+    --kg-z-sticky: 1100;
+    --kg-z-overlay: 1200;
+    --kg-z-popover: 1400;
+    --kg-z-toast: 1500;
+    --kg-z-tooltip: 1600;
+  }
+
+  /* Snap instead of removing motion: state changes stay visible, they just stop travelling. */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --kg-duration-instant: 1ms;
+      --kg-duration-fast: 1ms;
+      --kg-duration-base: 1ms;
+      --kg-duration-slow: 1ms;
+      --kg-duration-slower: 1ms;
+      --kg-duration-spring: 1ms;
+      --kg-duration-bounce: 1ms;
+    }
+  }
+
+  [data-kg-motion="reduce"] {
+    --kg-duration-instant: 1ms;
+    --kg-duration-fast: 1ms;
+    --kg-duration-base: 1ms;
+    --kg-duration-slow: 1ms;
+    --kg-duration-slower: 1ms;
+    --kg-duration-spring: 1ms;
+    --kg-duration-bounce: 1ms;
+  }
+}

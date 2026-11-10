@@ -1,0 +1,45 @@
+/* The stepped flicker loop, which stops under both reduced-motion signals. */
+@layer kg.components {
+  .kg-noise[data-animated] .kg-noise__grain {
+    animation: kg-noise-flicker 1s steps(1, end) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-noise[data-animated] .kg-noise__grain {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-noise[data-animated] .kg-noise__grain,
+  .kg-noise[data-kg-motion="reduce"][data-animated] .kg-noise__grain {
+    animation: none;
+  }
+
+  @keyframes kg-noise-flicker {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    12.5% {
+      transform: translate3d(-3%, 4%, 0);
+    }
+    25% {
+      transform: translate3d(5%, -2%, 0);
+    }
+    37.5% {
+      transform: translate3d(-6%, -5%, 0);
+    }
+    50% {
+      transform: translate3d(2%, 7%, 0);
+    }
+    62.5% {
+      transform: translate3d(-1%, -7%, 0);
+    }
+    75% {
+      transform: translate3d(7%, 3%, 0);
+    }
+    87.5% {
+      transform: translate3d(-5%, 1%, 0);
+    }
+  }
+}

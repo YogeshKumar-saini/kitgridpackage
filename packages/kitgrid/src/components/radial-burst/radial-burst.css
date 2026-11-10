@@ -1,0 +1,37 @@
+@layer kg.components {
+  .kg-radial-burst__disc {
+    background: repeating-conic-gradient(
+      from 0deg,
+      color-mix(in oklab, var(--_c) 40%, transparent) 0deg,
+      transparent var(--kg-radial-burst-lit, 4deg) var(--kg-radial-burst-period, 10deg)
+    );
+    mask-image: radial-gradient(closest-side, #000 2%, rgb(0 0 0 / 0.4) 30%, transparent 70%);
+    animation: kg-radial-burst-turn calc(120s / var(--kg-radial-burst-speed, 1)) linear
+      infinite;
+    animation-play-state: var(--kg-radial-burst-state, running);
+  }
+
+  .kg-radial-burst__glow {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--_c) 45%, transparent),
+      transparent
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-radial-burst__disc {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-radial-burst__disc {
+    animation: none;
+  }
+
+  @keyframes kg-radial-burst-turn {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+}

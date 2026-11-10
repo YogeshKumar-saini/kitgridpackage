@@ -1,0 +1,35 @@
+/* Edge masks and the pointer-following glow are gradient stacks: neither fits in utilities. */
+@layer kg.components {
+  .kg-dot-pattern {
+    &[data-mask="radial"] > .kg-dot-pattern__layer {
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 20%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-dot-pattern__layer {
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 25%, transparent 100%);
+    }
+
+    &[data-mask="bottom"] > .kg-dot-pattern__layer {
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 100%, #000 25%, transparent 100%);
+    }
+
+    &[data-mask="edges"] > .kg-dot-pattern__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  /* --kg-pointer-x/y are written by usePointerVars on the tracked element and inherited here. */
+  .kg-dot-pattern__glow {
+    --_at: var(--kg-pointer-x, -100vmax) var(--kg-pointer-y, -100vmax);
+
+    background: radial-gradient(
+      circle var(--_glow-radius) at var(--_at),
+      color-mix(in oklab, var(--_glow) 12%, transparent),
+      transparent 80%
+    );
+    mask-image: radial-gradient(circle var(--_glow-radius) at var(--_at), #000 25%, transparent);
+  }
+}

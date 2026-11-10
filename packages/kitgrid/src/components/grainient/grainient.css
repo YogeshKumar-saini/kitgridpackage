@@ -1,0 +1,20 @@
+/* Keyframes only: the drift paths can't be utilities. */
+@layer kg.components {
+  @keyframes kg-grainient-a {
+    to {
+      transform: translate3d(38%, 30%, 0) rotate(40deg) scale(1.15);
+    }
+  }
+
+  @keyframes kg-grainient-b {
+    to {
+      transform: translate3d(-34%, -26%, 0) rotate(-30deg) scale(0.9);
+    }
+  }
+
+  @keyframes kg-grainient-c {
+    to {
+      transform: translate3d(-40%, 22%, 0) scale(1.35);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+@layer kg.components {
+  @keyframes kg-deploy-turn {
+    from {
+      transform: rotate(-120deg) scale(0.6);
+    }
+  }
+}

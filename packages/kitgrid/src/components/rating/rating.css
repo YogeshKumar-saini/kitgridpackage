@@ -1,0 +1,7 @@
+@layer kg.components {
+  @keyframes kg-rating-pop {
+    35% {
+      scale: 1.28;
+    }
+  }
+}

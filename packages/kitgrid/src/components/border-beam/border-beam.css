@@ -1,0 +1,126 @@
+/* An XOR mask, the beam pseudo-elements on an offset path and a registered angle fallback. */
+@property --kg-beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@layer kg.components {
+  .kg-border-beam {
+    --_size: var(--kg-beam-size, 80px);
+    --_duration: var(--kg-beam-duration, 6s);
+    --_delay: var(--kg-beam-delay, 0s);
+
+    /* Two masks XOR'd leave only the edge band, so the beam never crosses the content. */
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+
+    /* The beam rides the container's own outline at constant speed, corners included. */
+    &::after {
+      content: "";
+      position: absolute;
+      width: var(--_size);
+      aspect-ratio: 1;
+      offset-path: rect(0 auto auto 0 round var(--_path-radius, 0px));
+      offset-anchor: 90% 50%;
+      background: linear-gradient(to left, var(--_from), var(--_to), transparent);
+      animation: kg-beam-travel var(--_duration) linear var(--_delay) infinite;
+    }
+
+    &[data-reverse]::after {
+      offset-anchor: 10% 50%;
+      background: linear-gradient(to right, var(--_from), var(--_to), transparent);
+      animation-direction: reverse;
+    }
+
+    &[data-paused]::after,
+    &[data-paused]::before {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes kg-beam-travel {
+    from {
+      offset-distance: 0%;
+    }
+    to {
+      offset-distance: 100%;
+    }
+  }
+
+  @keyframes kg-beam-spin {
+    to {
+      --kg-beam-angle: 360deg;
+    }
+  }
+
+  /* Without offset-path shapes, sweep a conic gradient around the edge instead. */
+  @supports not (offset-path: rect(0 auto auto 0)) {
+    .kg-border-beam {
+      &::after {
+        display: none;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: conic-gradient(
+          from var(--kg-beam-angle),
+          transparent 0turn,
+          transparent 0.72turn,
+          var(--_to) 0.92turn,
+          var(--_from) 1turn
+        );
+        animation: kg-beam-spin var(--_duration) linear var(--_delay) infinite;
+      }
+
+      &[data-reverse]::before {
+        background: conic-gradient(
+          from var(--kg-beam-angle),
+          var(--_from) 0turn,
+          var(--_to) 0.08turn,
+          transparent 0.28turn,
+          transparent 1turn
+        );
+        animation-direction: reverse;
+      }
+    }
+  }
+
+  /* Reduced motion: a still gradient edge in the same colours. */
+  @media (prefers-reduced-motion: reduce) {
+    .kg-border-beam {
+      &::after {
+        display: none;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        animation: none;
+        background: linear-gradient(135deg, var(--_from), transparent 35%, transparent 65%, var(--_to));
+      }
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-border-beam {
+    &::after {
+      display: none;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      animation: none;
+      background: linear-gradient(135deg, var(--_from), transparent 35%, transparent 65%, var(--_to));
+    }
+  }
+}

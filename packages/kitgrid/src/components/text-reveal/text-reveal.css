@@ -1,0 +1,30 @@
+/* Keyframes can't be utilities. */
+@layer kg.components {
+  @keyframes kg-text-reveal-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(0.45em);
+    }
+  }
+
+  @keyframes kg-text-reveal-blur {
+    from {
+      opacity: 0;
+      filter: blur(0.28em);
+      transform: translateY(0.12em) scale(1.04);
+    }
+  }
+
+  @keyframes kg-text-reveal-mask {
+    from {
+      transform: translateY(118%);
+    }
+  }
+
+  @keyframes kg-text-reveal-scale {
+    from {
+      opacity: 0;
+      transform: scale(0.35);
+    }
+  }
+}

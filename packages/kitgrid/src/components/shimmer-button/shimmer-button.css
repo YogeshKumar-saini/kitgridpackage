@@ -1,0 +1,118 @@
+/* The travelling light and sheen are pseudo-element gradient stacks spun by a registered angle. */
+@property --kg-shimmer-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@layer kg.components {
+  .kg-shimmer-button {
+    --_duration: var(--kg-shimmer-duration, 3s);
+
+    /* The travelling light: a conic gradient spun by a registered angle, masked to the edge. */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      padding: 2px;
+      border-radius: inherit;
+      background:
+        conic-gradient(
+          from var(--kg-shimmer-angle),
+          transparent 0turn,
+          transparent 0.5turn,
+          color-mix(in oklab, var(--_shimmer) 35%, transparent) 0.78turn,
+          var(--_shimmer) 0.97turn,
+          transparent 1turn
+        ),
+        linear-gradient(
+          color-mix(in oklab, var(--_shimmer) 22%, transparent),
+          color-mix(in oklab, var(--_shimmer) 22%, transparent)
+        );
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#000 0 0) content-box exclude,
+        linear-gradient(#000 0 0);
+      animation: kg-shimmer-spin var(--_duration) linear infinite;
+    }
+
+    /* The sheen: a diagonal band that crosses the surface once per lap, then rests. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      background: linear-gradient(
+          105deg,
+          transparent 38%,
+          color-mix(in oklab, var(--_shimmer) 30%, transparent) 50%,
+          transparent 62%
+        )
+        no-repeat;
+      background-size: 250% 100%;
+      background-position: 130% 0;
+      animation: kg-shimmer-sheen var(--_duration) var(--kg-ease-in-out) infinite;
+    }
+
+    &[data-paused]::before,
+    &[data-paused]::after {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes kg-shimmer-spin {
+    to {
+      --kg-shimmer-angle: 360deg;
+    }
+  }
+
+  @keyframes kg-shimmer-sheen {
+    0% {
+      background-position: 130% 0;
+    }
+    45%,
+    100% {
+      background-position: -30% 0;
+    }
+  }
+
+  /* Reduced motion: no travelling light, just a fixed highlight on the edge. */
+  @media (prefers-reduced-motion: reduce) {
+    .kg-shimmer-button::before {
+      animation: none;
+      background: linear-gradient(
+        135deg,
+        var(--_shimmer),
+        color-mix(in oklab, var(--_shimmer) 20%, transparent) 45%,
+        color-mix(in oklab, var(--_shimmer) 50%, transparent)
+      );
+    }
+
+    .kg-shimmer-button::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-shimmer-button {
+    &::before {
+      animation: none;
+      background: linear-gradient(
+        135deg,
+        var(--_shimmer),
+        color-mix(in oklab, var(--_shimmer) 20%, transparent) 45%,
+        color-mix(in oklab, var(--_shimmer) 50%, transparent)
+      );
+    }
+
+    &::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+}

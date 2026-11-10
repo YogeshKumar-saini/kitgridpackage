@@ -1,0 +1,30 @@
+@layer kg.components {
+  /* Moving between triggers slides the panel in from, and out to, the side it travels. */
+  @keyframes kg-navmenu-from-end {
+    from {
+      opacity: 0;
+      transform: translateX(32px);
+    }
+  }
+
+  @keyframes kg-navmenu-from-start {
+    from {
+      opacity: 0;
+      transform: translateX(-32px);
+    }
+  }
+
+  @keyframes kg-navmenu-to-start {
+    to {
+      opacity: 0;
+      transform: translateX(-32px);
+    }
+  }
+
+  @keyframes kg-navmenu-to-end {
+    to {
+      opacity: 0;
+      transform: translateX(32px);
+    }
+  }
+}

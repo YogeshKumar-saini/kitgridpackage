@@ -1,0 +1,57 @@
+/* Masks and the dash loop: neither fits in utilities. */
+@layer kg.components {
+  .kg-background-beams {
+    &[data-mask="radial"] > .kg-background-beams__layer {
+      mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="top"] > .kg-background-beams__layer {
+      mask-image: radial-gradient(ellipse 100% 85% at 50% 0%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="bottom"] > .kg-background-beams__layer {
+      mask-image: radial-gradient(ellipse 100% 85% at 50% 100%, #000 30%, transparent 100%);
+    }
+
+    &[data-mask="edges"] > .kg-background-beams__layer {
+      mask-image:
+        linear-gradient(to right, transparent, #000 15% 85%, transparent),
+        linear-gradient(to bottom, transparent, #000 15% 85%, transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  /*
+   * pathLength=1 makes every beam one unit long, so a 0.22 dash with a gap of 2 is a single light
+   * whatever the curve. Offsets beyond [−1, 0.22] hide it, including its round caps.
+   */
+  .kg-background-beams__lights path {
+    stroke-linecap: round;
+    stroke-dasharray: 0.22 2;
+    stroke-dashoffset: var(--_rest, -0.4);
+    animation-name: kg-background-beams-travel;
+    animation-timing-function: var(--kg-ease-in-out);
+    animation-iteration-count: infinite;
+    animation-fill-mode: backwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-background-beams__lights path {
+      animation: none;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-background-beams__lights path {
+    animation: none;
+  }
+
+  @keyframes kg-background-beams-travel {
+    0% {
+      stroke-dashoffset: 0.24;
+    }
+    65%,
+    100% {
+      stroke-dashoffset: -1.02;
+    }
+  }
+}

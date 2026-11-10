@@ -1,0 +1,49 @@
+/* Keyframes can't be utilities. */
+@layer kg.components {
+  @keyframes kg-rotating-text-slide-in {
+    from {
+      transform: translateY(110%);
+    }
+  }
+  @keyframes kg-rotating-text-slide-out {
+    to {
+      transform: translateY(-110%);
+    }
+  }
+
+  @keyframes kg-rotating-text-blur-in {
+    from {
+      opacity: 0;
+      filter: blur(0.25em);
+      transform: translateY(0.3em);
+    }
+  }
+  @keyframes kg-rotating-text-blur-out {
+    to {
+      opacity: 0;
+      filter: blur(0.25em);
+      transform: translateY(-0.3em);
+    }
+  }
+
+  @keyframes kg-rotating-text-flip-in {
+    from {
+      opacity: 0;
+      transform: rotateX(-90deg);
+      transform-origin: 50% 100%;
+    }
+    to {
+      transform-origin: 50% 100%;
+    }
+  }
+  @keyframes kg-rotating-text-flip-out {
+    from {
+      transform-origin: 50% 0%;
+    }
+    to {
+      opacity: 0;
+      transform: rotateX(90deg);
+      transform-origin: 50% 0%;
+    }
+  }
+}

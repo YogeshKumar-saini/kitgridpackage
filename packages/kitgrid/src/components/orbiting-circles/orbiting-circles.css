@@ -1,0 +1,7 @@
+@layer kg.components {
+  @keyframes kg-orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

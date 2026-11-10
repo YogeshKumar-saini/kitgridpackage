@@ -1,0 +1,7 @@
+@layer kg.components {
+  @keyframes kg-flowing-menu-scroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}

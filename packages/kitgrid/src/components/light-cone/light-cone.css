@@ -1,0 +1,75 @@
+@layer kg.components {
+  /* The cone's apex sits above the bar, so the light leaves the bar across its full width. */
+  .kg-light-cone__beam {
+    --_offset: calc(var(--kg-light-cone-width, 34rem) / 2 / tan(var(--_half)));
+    top: calc(var(--_top) - var(--_offset));
+    height: calc(100% - var(--_top) + var(--_offset) + 10%);
+    clip-path: inset(var(--_offset) 0 0 0);
+    background: conic-gradient(
+      from calc(180deg - var(--_half)) at 50% 0%,
+      transparent 0deg,
+      color-mix(in oklab, var(--_c) 40%, transparent) var(--_half),
+      transparent calc(var(--_half) * 2)
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 var(--_offset),
+      rgb(0 0 0 / 0.5) calc(var(--_offset) + 30%),
+      transparent 90%
+    );
+  }
+
+  .kg-light-cone__pool {
+    background: radial-gradient(
+      closest-side,
+      color-mix(in oklab, var(--_c) 45%, transparent),
+      transparent
+    );
+  }
+
+  .kg-light-cone__bar {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--_c) 60%, var(--kg-surface)) 20% 80%,
+      transparent
+    );
+  }
+
+  .kg-light-cone[data-animated] {
+    & .kg-light-cone__beam,
+    & .kg-light-cone__pool,
+    & .kg-light-cone__bar {
+      animation: kg-light-cone-open var(--kg-light-cone-duration, 1.2s) var(--kg-ease-out)
+        both;
+    }
+
+    & .kg-light-cone__beam {
+      animation-name: kg-light-cone-widen;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kg-light-cone__layer > * {
+      animation: none !important;
+    }
+  }
+
+  [data-kg-motion="reduce"] .kg-light-cone__layer > * {
+    animation: none !important;
+  }
+
+  @keyframes kg-light-cone-open {
+    from {
+      opacity: 0;
+      transform: scaleX(0.4);
+    }
+  }
+
+  @keyframes kg-light-cone-widen {
+    from {
+      opacity: 0;
+      transform: scaleX(0.5);
+    }
+  }
+}

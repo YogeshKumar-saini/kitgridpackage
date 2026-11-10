@@ -1,0 +1,9 @@
+@layer kg.components {
+  @keyframes kg-free-shipping-pop {
+    from {
+      opacity: 0;
+      scale: 0.4;
+      rotate: -20deg;
+    }
+  }
+}
