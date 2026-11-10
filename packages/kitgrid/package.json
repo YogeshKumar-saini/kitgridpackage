@@ -1,9 +1,6 @@
 {
   "name": "@yogeshsaini/kitgrid",
   "version": "0.1.0",
-  "publishConfig": {
-    "access": "public"
-  },
   "description": "Accessible React components with premium motion and a full commerce kit. Zero runtime dependencies, works with or without Tailwind.",
   "license": "MIT",
   "type": "module",
