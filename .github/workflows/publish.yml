@@ -74,6 +74,8 @@ jobs:
       - name: Publish to GitHub Packages
         run: |
           cd packages/kitgrid
+          OWNER_LC="$(echo "${OWNER}" | tr '[:upper:]' '[:lower:]')"
+          npm pkg set name="@${OWNER_LC}/kitgrid"
           npm publish --registry https://npm.pkg.github.com
         env:
           OWNER: ${{ github.repository_owner }}
