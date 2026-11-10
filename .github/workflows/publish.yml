@@ -42,6 +42,7 @@ jobs:
       - name: Publish to npm
         run: |
           cd packages/kitgrid
+          npm pkg set name="@yogeshsaini/kitgrid"
           npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
