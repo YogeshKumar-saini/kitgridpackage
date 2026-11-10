@@ -40,8 +40,10 @@ jobs:
 
       - name: Publish to npm
         run: |
+          echo "Logged in as:"
+          npm whoami
           cd packages/kitgrid
-          npm publish --access public --no-provenance
+          npm publish --access public --provenance=false
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
