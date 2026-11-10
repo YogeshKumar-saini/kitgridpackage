@@ -21,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
 
     steps:
       - name: Checkout repository
@@ -42,7 +41,7 @@ jobs:
       - name: Publish to npm
         run: |
           cd packages/kitgrid
-          npm publish --access public
+          npm publish --access public --no-provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

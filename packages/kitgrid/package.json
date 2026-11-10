@@ -48,7 +48,7 @@
   "scripts": {
     "generate": "node scripts/generate.mjs",
     "build": "node scripts/generate.mjs && node scripts/clean.mjs && tsc -p tsconfig.build.json && node scripts/build-css.mjs && node scripts/check-classes.mjs",
-    "dev": "t sc -p tsconfig.build.json --watch",
+    "dev": "tsc -p tsconfig.build.json --watch",
     "typecheck": "tsc --noEmit",
     "size": "node scripts/size.mjs",
     "prepublishOnly": "npm run build"
@@ -84,5 +84,8 @@
     "accessible",
     "tailwind",
     "nextjs"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
