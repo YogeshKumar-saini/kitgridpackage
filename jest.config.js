@@ -10,7 +10,7 @@ export default {
   ],
   setupFilesAfterEnv: ["<rootDir>/test/setup.ts"],
   transform: {
-    "^.+\.(t|j)sx?$": [
+    "^.+\\.(t|j)sx?$": [
       "@swc/jest",
       {
         jsc: {
@@ -23,8 +23,12 @@ export default {
     ],
   },
   moduleNameMapper: {
-    "^(\.{1,2}/.*)\.js$": "$1",
+    "^(\\.{1,2}/.*)\\.js$": "$1",
   },
+  // Do not let SWC/pirates transform node_modules — undici's CJS destructuring
+  // of node:zlib (createZstdDecompress) breaks when rewritten by SWC.
+  // Jest's default already ignores node_modules; this makes it explicit.
+  transformIgnorePatterns: ["/node_modules/"],
   // Match Vitest's default fake-timer surface: timers and Date only.
   fakeTimers: {
     doNotFake: [
